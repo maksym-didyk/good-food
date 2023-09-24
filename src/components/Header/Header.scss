@@ -1,9 +1,19 @@
+@import '../../assets/styles/scss/mixins';
+
 .header {
   padding: 40px 70px 110px;
   position: absolute;
   top: 42;
   left: 0;
   width: 100%;
+
+  @include onTablet {
+    padding: 40px 40px 110px;
+  }
+
+  @include onPhone {
+    padding: 40px 20px 110px;
+  }
 
   &__container {
     display: flex;
@@ -19,6 +29,10 @@
     align-items: center;
     gap: 60px;
     cursor: pointer;
+
+    @include onPhone {
+      display: none;
+    }
   }
 
   &__link {

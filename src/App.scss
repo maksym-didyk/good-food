@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+@import './assets/styles/scss/mixins';
 
 * {
   box-sizing: border-box;
@@ -26,6 +27,7 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
     background: url(./assets/images/crop-plate-with-savory-salad.png);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
     width: 100%;
     height: 100vh;
 
@@ -38,6 +40,16 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
       align-content: flex-start;
       gap: 45px;
       max-width: 859px;
+
+      @include onTablet {
+        width: 100%;
+        padding: 222px 0  0 40px;
+      }
+
+      @include onPhone {
+        width: 100%;
+        padding: 222px 0  0 20px;
+      }
     }
 
     &--title {
@@ -45,6 +57,10 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
       font-size: 66px;
       font-weight: 700;
       text-align: left;
+
+      @include onPhone {
+        font-size: 44px;
+      }
     }
 
     &--text {
@@ -52,12 +68,15 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
       font-size: 24px;
       font-weight: 400;
       text-align: left;
+
+      @include onPhone {
+        font-size: 16px;
+      }
     }
   }
 
   &__menu {
     padding: 120px 70px;
-
 
     &--title {
       color: #000;
@@ -65,6 +84,10 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
       font-weight: 700;
       text-align: center;
       margin-bottom: 84px;
+
+      @include onPhone {
+        font-size: 48px;
+      }
     }
 }
 
@@ -89,6 +112,10 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
       gap: 130px;
       text-align: left;
       color: #FFF;
+
+      @include onTablet {
+        flex-wrap: wrap;
+      }
     }
 
     &--left {
@@ -120,6 +147,10 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
       max-width: 637px;
       height: auto;
       border-radius: 16px;
+
+      @include onTablet {
+        width: 100%;
+      }
     }
   }
 }
