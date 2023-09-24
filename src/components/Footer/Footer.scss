@@ -1,0 +1,77 @@
+.footer {
+  padding: 120px 70px;
+  width: 90%;
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    text-align: left;
+  }
+
+  &__title {
+    color: #C21807;
+    font-size: 25px;
+    font-weight: 500;
+  }
+
+  &__menu {
+    margin-top: 56px;
+  }
+
+  &__li {
+    margin-top: 20px;
+  }
+
+  &__link {
+    color: #000;
+    font-size: 20px;
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  &__logowrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    margin-top: 58px;
+  }
+
+  &__rights {
+    color: #1D1D1D;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  &__phone{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 56px;
+  }
+
+  &__number {
+    color: #C21807;
+    font-size: 25px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  &__call {
+    color: #000;
+    font-size: 20px;
+    font-weight: 300;
+    margin-top: 20px;
+  }
+
+  &__icons {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    margin-top: 22px;
+  }
+}
