@@ -21,8 +21,8 @@ export const Footer = () => {
               </div>
               <ul className='footer__menu'>
                 <li className='footer__li'><a href='#menu' className='footer__link'>Рационы питания</a></li>
-                <li className='footer__li'><a href='#/about-us' className='footer__link'>О нас</a></li>
-                <li className='footer__li'><a href='#/' className='footer__link'>Как это работает?</a></li>
+                <li className='footer__li'><a href='#about-us' className='footer__link'>О нас</a></li>
+                <li className='footer__li'><a href='#howitwork' className='footer__link'>Как это работает?</a></li>
                 <li className='footer__li'><a href='#/' className='footer__link'>Отзывы</a></li>
                 <li className='footer__li'><a href='#/' className='footer__link'>F.A.Q.</a></li>
               </ul>

@@ -31,6 +31,10 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
     width: 100%;
     height: 100vh;
 
+    @include onPhone {
+      background: #111114;
+    }
+
     &-section {
       padding: 222px 0  0 70px;
       display: flex;
@@ -43,12 +47,12 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
 
       @include onTablet {
         width: 100%;
-        padding: 222px 0  0 40px;
+        padding: 222px 0 0 40px;
       }
 
       @include onPhone {
         width: 100%;
-        padding: 222px 0  0 20px;
+        padding: 222px 0 0 20px;
       }
     }
 
@@ -78,6 +82,16 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
   &__menu {
     padding: 120px 70px;
 
+    @include onTablet {
+      width: 100%;
+      padding: 120px 40px;
+    }
+
+    @include onPhone {
+      width: 100%;
+      padding:120px 20px;
+    }
+
     &--title {
       color: #000;
       font-size: 72px;
@@ -103,11 +117,20 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
     padding: 90px 70px 190px;
     background: #111114;
 
+    @include onTablet {
+      width: 100%;
+      padding: 90px 40px 190px;
+    }
+
+    @include onPhone {
+      width: 100%;
+      padding: 90px 20px 190px;
+    }
+
     &--content {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-      align-content: flex-start;
       align-items: flex-start;
       gap: 130px;
       text-align: left;
@@ -127,16 +150,28 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
     &--title {
       font-size: 72px;
       font-weight: 700;
+
+      @include onPhone {
+        font-size: 48px;
+      }
     }
 
     &--text {
       font-size: 24px;
       font-weight: 300;
+
+      @include onPhone {
+        font-size: 18px;
+      }
     }
 
     &--list {
       font-size: 16px;
       font-weight: 400;
+
+      @include onPhone {
+        font-size: 14px;
+      }
     }
 
     &--li {
@@ -151,6 +186,24 @@ html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, button, 
       @include onTablet {
         width: 100%;
       }
+    }
+  }
+
+  &__whywecard {
+    width: 262px;
+    color: #121214;
+    text-align: center;
+
+    &--title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 19px;
+    }
+
+    &--content {
+      font-size: 14px;
+      font-weight: 400;
+      margin-top: 14px;
     }
   }
 }

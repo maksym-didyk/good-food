@@ -26,7 +26,7 @@ export const Header = () => {
               <ul className='header__navbar'>
                 <li><a href='#menu' className='header__link'>Меню</a></li>
                 <li><a href='#about-us' className='header__link'>O компании</a></li>
-                <li><a href='#/' className='header__link'>Почему мы?</a></li>
+                <li><a href='#howitwork' className='header__link'>Почему мы?</a></li>
               </ul>
               <button className='header__button'>Связаться</button>
             </div>
