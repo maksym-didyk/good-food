@@ -2,8 +2,10 @@ import React from 'react';
 import './App.scss';
 import { Header } from './components/Header';
 import { ProductCard } from './components/ProductCard/ProductCard';
-import imgAboutUs from './assets/images/about-us.png'
 import { Footer } from './components/Footer';
+import imgAboutUs from './assets/images/about-us.png'
+import imgFormSection from './assets/images/photo_formsection.png';
+import { Accordion, Col, Row, Tab, Tabs } from 'react-bootstrap';
 
 function App() {
   return (
@@ -138,9 +140,9 @@ function App() {
         </div>
 
         <div className='App__whywecard'>
-        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
-          <path opacity="0.5" d="M40.125 24.856C33.875 10.1872 12 11.7497 12 30.4997C12 49.2497 40.125 64.8747 40.125 64.8747C40.125 64.8747 68.25 49.2497 68.25 30.4997C68.25 11.7497 46.375 10.1872 40.125 24.856Z" stroke="#C21807" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <path opacity="0.5" d="M40.125 24.856C33.875 10.1872 12 11.7497 12 30.4997C12 49.2497 40.125 64.8747 40.125 64.8747C40.125 64.8747 68.25 49.2497 68.25 30.4997C68.25 11.7497 46.375 10.1872 40.125 24.856Z" stroke="#C21807" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
 
           <div className='App__whywecard--title'>
             Заботимся о вас и вашем питании
@@ -152,6 +154,226 @@ function App() {
         </div>
 
         </div>
+      </section>
+
+      <section className='App__delivery'>
+        <h2 className='App__menu--title'>Бесплатная доставка</h2>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <path d="M32 56C45.2548 56 56 45.2548 56 32C56 18.7452 45.2548 8 32 8C18.7452 8 8 18.7452 8 32C8 45.2548 18.7452 56 32 56Z" stroke="#C21807" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M29.334 21.3333V34.6667H42.6673" stroke="#C21807" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        <div className='App__maptext'>
+          Бесплатная доставка каждый день
+          <br />
+          <span className='App__maptext--red'>с 18:00 до 21:00</span>
+        </div>
+
+        <iframe title="GoogleMap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d51316.70461027648!2d-4.880515161089349!3d36.498755678465145!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72d809904dabdf%3A0xe6c9db907b5ecab!2z0JzQsNGA0LHQtdC70YzRjywg0JzQsNC70LDQs9CwLCDQhtGB0L_QsNC90ZbRjw!5e0!3m2!1suk!2sua!4v1695757805681!5m2!1suk!2sua" width="100%" height="490" loading="lazy" />
+      </section>
+
+      <section className='App__menu'>
+          <h2 className='App__menu--title'>F.A.Q.</h2>
+        
+          <Tabs
+            defaultActiveKey="nutrition"
+            id="justify-tab-example"
+            className="mb-3"
+            fill
+          >
+            <Tab eventKey="nutrition" title="Nutrition">
+              <Accordion defaultActiveKey="" flush>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>How are the calories calculated?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="1">
+                  <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="2">
+                  <Accordion.Header>Do I have to work out when eating GoodFood?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="3">
+                  <Accordion.Header>Is healthy food tasty?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Tab>
+
+            <Tab eventKey="menu" title="Menu">
+              <Accordion defaultActiveKey="" flush>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>How are the calories calculated?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="1">
+                  <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Tab>
+
+            <Tab eventKey="meal-plans" title="Meal Plans">
+              <Accordion defaultActiveKey="" flush>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>How are the calories calculated?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="1">
+                  <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Tab>
+
+            <Tab eventKey="payment" title="Payment and Delivery">
+              <Accordion defaultActiveKey="" flush>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>How are the calories calculated?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="1">
+                  <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Tab>
+
+            <Tab eventKey="storing" title="Storing">
+              <Accordion defaultActiveKey="" flush>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>How are the calories calculated?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="1">
+                  <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
+                  <Accordion.Body>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in
+                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+            </Tab>
+          </Tabs>
+      </section>
+
+      <section className='App__formsection'>
+        <Row>
+          <Col>
+            {/* <img src={imgFormSection} alt=''/> */}
+          </Col>
+
+          <Col>
+            {/* <img src={imgFormSection} alt=''/> */}
+          </Col>
+        </Row>
+
+
+        <div className='App__form'></div>
+
       </section>
 
       <Footer />
