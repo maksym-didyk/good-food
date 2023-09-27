@@ -71,10 +71,6 @@ export const HomePage = () => {
         </div>
       </div>
 
-      <div>
-        <div id="myDiv">Содержимое другой страницы</div>
-      </div>
-
       <section className='homepage__menu' id='howitwork'>
   
         <h2 className='homepage__menu--title'>Как это работает?</h2>
@@ -176,7 +172,7 @@ export const HomePage = () => {
         <iframe title="GoogleMap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d51316.70461027648!2d-4.880515161089349!3d36.498755678465145!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72d809904dabdf%3A0xe6c9db907b5ecab!2z0JzQsNGA0LHQtdC70YzRjywg0JzQsNC70LDQs9CwLCDQhtGB0L_QsNC90ZbRjw!5e0!3m2!1suk!2sua!4v1695757805681!5m2!1suk!2sua" width="100%" height="490" loading="lazy" />
       </section>
 
-      <section className='homepage__menu'>
+      <section className='homepage__menu' id='faq'>
           <h2 className='homepage__menu--title'>F.A.Q.</h2>
 
           <Tabs
@@ -364,9 +360,7 @@ export const HomePage = () => {
       </section>
 
       <section className='homepage__formsection'>
-          <div className='homepage__formsection-imagewrapper'>
-            {/* <img src={imgFormSection} alt='' className='homepage__formsection-image'/> */}
-          </div>
+          <div className='homepage__formsection-imagewrapper' />
 
           <div className='homepage__formsection-content'>
             <div className='homepage__formsection-title'>
@@ -384,7 +378,7 @@ export const HomePage = () => {
               Оставьте заявку и мы свяжемся с Вами!
             </div>
             <div>
-              <button className='product-card__button-buy'>Оставить заявку</button>
+              <button className='product-card__button-buy sp_popup_9762e6a3-e059-4706-b363-420054bfbf4b'>Оставить заявку</button>
             </div>
           </div>
 
