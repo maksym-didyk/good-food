@@ -1,6 +1,7 @@
 import React from 'react';
 import './ProductCard.scss';
 import imgPlan from '../../assets/images/light.png';
+import { Link } from 'react-router-dom';
 
 export const ProductCard = () => {
     return(
@@ -12,7 +13,7 @@ export const ProductCard = () => {
             <div className='product-card__content'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
             <div className='product-card__price'>€ 24</div>
             <div className='product-card__button'>
-              <button className='product-card__button-buy'>Заказать</button>
+              <Link to='/menu' className='product-card__button-buy'>Заказать</Link>
             </div>
             
           </div>
