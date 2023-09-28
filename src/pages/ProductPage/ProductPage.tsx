@@ -101,21 +101,21 @@ export const ProductPage = () => {
           <Container>
             <Row>
               <Col sm={6}>
-                <img src={imgOne} className='product__image'/>
+                <img src={imgOne} className='product__image' alt='' />
                 <p className='product__menuname'>Скрембл с трюфельной пастой</p>
               </Col>
               <Col sm={6}>
-                <img src={imgTwo} className='product__image' />
+                <img src={imgTwo} className='product__image' alt='' />
                 <p className='product__menuname'>Тортилья с креветкой и овощами </p>
               </Col>
             </Row>
             <Row>
               <Col sm={6}>
-                <img src={imgThree} className='product__image' />
+                <img src={imgThree} className='product__image' alt='' />
                 <p className='product__menuname'>Салат с индейкой, черри и авокадо</p>
               </Col>
               <Col sm={6}>
-                <img src={imgFour} className='product__image' />
+                <img src={imgFour} className='product__image' alt='' />
                 <p className='product__menuname'>Фруктовый салат с орехами</p>
               </Col>
             </Row>
