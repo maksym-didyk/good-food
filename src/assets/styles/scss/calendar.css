@@ -30,22 +30,26 @@
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  border-radius: 10px;
 }
 
 .react-calendar button {
   margin: 0;
   border: 0;
   outline: none;
+  border-radius: 10px;
 }
 
 .react-calendar button:enabled:hover {
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .react-calendar__navigation {
   display: flex;
   height: 44px;
   margin-bottom: 1em;
+  border-radius: 10px;
 }
 
 .react-calendar__navigation button {
@@ -133,12 +137,12 @@
 }
 
 .react-calendar__tile--hasActive {
-  background: #76baff;
+  background: rgba(194, 24, 7, 0.32);
 }
 
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-  background: #a9d4ff;
+  background: rgba(194, 24, 7, 0.32);
 }
 
 .react-calendar__tile--active {

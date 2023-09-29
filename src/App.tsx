@@ -10,7 +10,7 @@ function App() {
       <Routes>
         {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
           <Route index element={<HomePage />} />
-          <Route path="/menu" element={<ProductPage />} />
+          <Route path="menu/:slug?" element={<ProductPage />} />
       </Routes>
     </BrowserRouter>
   );

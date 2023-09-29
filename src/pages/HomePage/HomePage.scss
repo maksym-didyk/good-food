@@ -208,6 +208,14 @@
     }
   }
 
+  &__accordion {
+    width: 60%;
+
+    @include onPhone {
+      width: 100%;
+    }
+  }
+
   &__formsection {
     display: flex;
     flex-direction: row;
