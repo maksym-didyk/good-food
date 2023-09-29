@@ -5,7 +5,7 @@ import { Footer } from '../../components/Footer';
 import { Carousel, Col, Container, Row } from 'react-bootstrap';
 import { ProductCard } from '../../components/ProductCard';
 import Calendar from 'react-calendar';
-import '../../assets/styles/scss/calendar.css';
+import '../../assets/styles/scss/calendar.scss';
 import imgOne from '../../assets/images/1.png';
 import imgTwo from '../../assets/images/2.png';
 import imgThree from '../../assets/images/3.png';
@@ -145,7 +145,7 @@ export const Product = () => {
             <div className='product__datetitle'>
               Выберите дату первой доставки
             </div>
-            <div>
+            <div className='product__calendar'>
               <Calendar onChange={setDatecalendar} value={datecalendar} />
             </div>
 

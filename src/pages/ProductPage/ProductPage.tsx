@@ -3,18 +3,18 @@ import { Product } from '../../components/Product';
 // import { useParams } from 'react-router-dom';
 import { client } from '../../utils/fetchClient';
 
-export interface Product {
-  data: [
-    id: number,
-    attributes: {
-      title: string,
-      price: number,
-      description: string,
-      slug: string,
-      energy: number,
-    }
-  ]
-}
+// export interface Product {
+//   data: [
+//     id: number,
+//     attributes: {
+//       title: string,
+//       price: number,
+//       description: string,
+//       slug: string,
+//       energy: number,
+//     }
+//   ]
+// }
 
 const getProducts = () => client.get<string>('/products');
 
