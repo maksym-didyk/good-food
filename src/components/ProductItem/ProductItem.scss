@@ -3,6 +3,10 @@
 .product {
   &__header {
     background: #000;
+    background: url(../../assets/images/crop-plate-with-savory-salad.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     height: 146px;
   }
 
@@ -67,7 +71,7 @@
 
   &__week {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     gap: 20px;
 

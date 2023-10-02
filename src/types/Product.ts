@@ -19,6 +19,19 @@ export interface ProductAttributes {
       }
     ]
   }
+  menu: ProductMenu[];
+}
+
+export interface ProductMenu {
+  id: number;
+  day: number;
+  title: string;
+  dish: [
+    {
+      id: number;
+      title: string;
+    }
+  ]
 }
 
 export interface Product {

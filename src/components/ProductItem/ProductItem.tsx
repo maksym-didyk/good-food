@@ -2,7 +2,7 @@ import React from 'react';
 import './ProductItem.scss';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
-import { Carousel, Col, Container, Row } from 'react-bootstrap';
+import { Carousel, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { ProductCard } from '../ProductCard';
 import Calendar from 'react-calendar';
 import '../../assets/styles/scss/calendar.scss';
@@ -44,7 +44,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   };
 
   const loadProducts = async () => {
-    const productsData = await client.get<any>('/products?sort=price');
+    const productsData = await client.get<any>('/products?sort=price&populate[menu][populate]=*');
     setProducts(productsData.data);
   };
 
@@ -98,13 +98,30 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
         <div className='product__container' id="menu">
           <div className='product__week'>
-            <figure className='product__day product__day--active'>Пн</figure>
-            <figure className='product__day'>Вт</figure>
-            <figure className='product__day'>Ср</figure>
-            <figure className='product__day'>Чт</figure>
-            <figure className='product__day'>Пт</figure>
-            <figure className='product__day'>Сб</figure>
-            <figure className='product__day'>Вс</figure>
+            <Tabs
+              defaultActiveKey="1"
+              id="justify-tab-example"
+              className="mb-3"
+              fill
+            >
+            {currentProduct?.attributes.menu.map((item) => {
+                return (
+                  <Tab key={item.id} eventKey={item.id} title={item.title}>
+                    <Row xs={1} md={2} lq={4} className="g-4">
+                      {item.dish.map(itemdish => {
+                        return (
+                          <Col key={itemdish.id}>
+                            <img src={imgOne} className='product__image' alt='' />
+                            <p className='product__menuname'>{itemdish.title}</p>
+                          </Col>
+                        )
+                      })}
+                    </Row>
+                  </Tab>
+                  // <figure key={item.id} className='product__day'>{item.title}</figure>
+                )
+            })}
+            </Tabs>
           </div>
 
           <div>
@@ -131,33 +148,8 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className='product__container'>
-          <Container>
-            <Row>
-              <Col sm={6}>
-                <img src={imgOne} className='product__image' alt='' />
-                <p className='product__menuname'>Скрембл с трюфельной пастой</p>
-              </Col>
-              <Col sm={6}>
-                <img src={imgTwo} className='product__image' alt='' />
-                <p className='product__menuname'>Тортилья с креветкой и овощами </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={6}>
-                <img src={imgThree} className='product__image' alt='' />
-                <p className='product__menuname'>Салат с индейкой, черри и авокадо</p>
-              </Col>
-              <Col sm={6}>
-                <img src={imgFour} className='product__image' alt='' />
-                <p className='product__menuname'>Фруктовый салат с орехами</p>
-              </Col>
-            </Row>
-          </Container>
-          <div className='product__date'>
+            <div className='product__date'>
             <div className='product__datetitle'>
               Выберите дату первой доставки
             </div>
@@ -173,6 +165,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
             >
               Заказать
             </button>
+          </div>
           </div>
         </div>
 

@@ -10,9 +10,9 @@ export const Footer = () => {
                 Выберите ваш рацион
               </div>
               <ul className='footer__menu'>
-                <li className='footer__li'><a href='#/' className='footer__link'>Light</a></li>
-                <li className='footer__li'><a href='#/' className='footer__link'>Comfort</a></li>
-                <li className='footer__li'><a href='#/' className='footer__link'>Power</a></li>
+                <li className='footer__li'><a href='/light' className='footer__link'>Light</a></li>
+                <li className='footer__li'><a href='/comfort' className='footer__link'>Comfort</a></li>
+                <li className='footer__li'><a href='/power' className='footer__link'>Power</a></li>
               </ul>
             </div>
             <div>  
