@@ -28,7 +28,7 @@ export const Header = () => {
                 <li><a href='/#about-us' className='header__link'>O компании</a></li>
                 <li><a href='/#howitwork' className='header__link'>Почему мы?</a></li>
               </ul>
-              <button className='header__button sp_popup_9762e6a3-e059-4706-b363-420054bfbf4b'>Связаться</button>
+              <button className='header__button sp_popup_28095c1b-d2f3-45d9-8d5f-8c2149e1b539'>Связаться</button>
             </div>
             </div>
         </div>

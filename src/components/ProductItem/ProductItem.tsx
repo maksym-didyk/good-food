@@ -167,7 +167,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
             <button
               className = {classnames('product-card__button-buy product__button--buy', {
-                'sp_popup_ee92261f-3d9e-4101-bf57-dfd5b4aaf302': isClick,
+                'sp_popup_1039a2a3-08c1-4a88-aa79-a0dd739c56ba': isClick,
               })}
               onClick={handleClick}
             >
