@@ -1,31 +1,9 @@
 import React from 'react';
-import { Product } from '../../components/Product';
-// import { useParams } from 'react-router-dom';
-import { client } from '../../utils/fetchClient';
-
-// export interface Product {
-//   data: [
-//     id: number,
-//     attributes: {
-//       title: string,
-//       price: number,
-//       description: string,
-//       slug: string,
-//       energy: number,
-//     }
-//   ]
-// }
-
-const getProducts = () => client.get<string>('/products');
+import { ProductItem } from '../../components/ProductItem';
+import { useParams } from 'react-router-dom';
 
 export const ProductPage = () => {
-  // const [products, setProducts] = React.useState<Product[]>([]);
-  // const { slug } = useParams();
-
-// const loadProducts = async () => {
-
-// }
-
+  let { slug } = useParams();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -35,8 +13,7 @@ export const ProductPage = () => {
     scrollToTop();
   }, []);
 
-  console.log(getProducts);
   return (
-    <Product />
+    <ProductItem slug={slug}/>
   )
 };

@@ -1,23 +1,29 @@
 import React from 'react';
-import './Product.scss';
-import { Header } from '../../components/Header';
-import { Footer } from '../../components/Footer';
+import './ProductItem.scss';
+import { Header } from '../Header';
+import { Footer } from '../Footer';
 import { Carousel, Col, Container, Row } from 'react-bootstrap';
-import { ProductCard } from '../../components/ProductCard';
+import { ProductCard } from '../ProductCard';
 import Calendar from 'react-calendar';
 import '../../assets/styles/scss/calendar.scss';
 import imgOne from '../../assets/images/1.png';
 import imgTwo from '../../assets/images/2.png';
 import imgThree from '../../assets/images/3.png';
 import imgFour from '../../assets/images/4.png';
-import { useLocalStorage } from '../../utils/useLocalStorage';
+import { useLocalStorage } from 'usehooks-ts';
 import classnames from 'classnames';
+import { Product } from '../../types/Product';
+import { client } from '../../utils/fetchClient';
 
 type ValuePiece = Date | null;
-
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export const Product = () => {
+interface Props {
+  slug: string | undefined;
+}
+
+export const ProductItem: React.FC<Props> = ({ slug='' }) => {
+  const [products, setProducts] = React.useState<Product[]>([]);
   const [isClick, setIsClick] = React.useState(false);
   const [datecalendar, setDatecalendar] = React.useState<Value>(new Date());
   const [, setProduct] = useLocalStorage<string>('product', '');
@@ -34,8 +40,19 @@ export const Product = () => {
     }
 
     setIsClick(true);
-    setProduct('Ligth');
+    setProduct(slug);
   };
+
+  const loadProducts = async () => {
+    const productsData = await client.get<any>('/products?sort=price');
+    setProducts(productsData.data);
+  };
+
+  const currentProduct = products.find(item => item.attributes.slug === slug);
+
+  React.useEffect(() => {
+    loadProducts();
+  }, []);
 
   return (
     <>
@@ -48,17 +65,17 @@ export const Product = () => {
             <div>
               <div className='product__hero'>
                 <h1 className='product__title'>
-                  Light
+                  {currentProduct?.attributes.title}
                 </h1>
                 <p className='product_text'>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. product/service description
+                  {currentProduct?.attributes.description}
                 </p>
                 <a href='#menu'
                   className = 'product-card__button-buy product__button'
                 >
-                  от
-                  <span className='product__buttonprice'>&euro;24</span>
-                  / день
+                  от &nbsp;
+                  <span className='product__buttonprice'>{`€${currentProduct?.attributes.price}`}</span>
+                  &nbsp; / день
                 </a>
               </div>
             </div>
@@ -66,15 +83,14 @@ export const Product = () => {
             <div>
               <div className='product__products'>
               <Carousel interval={3000}>
-                <Carousel.Item>
-                  <ProductCard small={true} />
-                </Carousel.Item>
-                <Carousel.Item>
-                  <ProductCard small={true} />
-                </Carousel.Item>
-                <Carousel.Item>
-                  <ProductCard small={true} />
-                </Carousel.Item>
+              {products &&
+                products.map((item) => {
+                  return (
+                    <Carousel.Item key={item.id}>
+                      <ProductCard small={true} product={item} />
+                  </Carousel.Item>
+                  )
+                })}
               </Carousel>
               </div>
             </div>
@@ -99,19 +115,19 @@ export const Product = () => {
               <div className='product__params'>
                 <div>
                   <p>ккал</p>
-                  <p className='product__param'>1221</p>
+                  <p className='product__param'>{currentProduct?.attributes.kcal}</p>
                 </div>
                 <div>
                   <p>б</p>
-                  <p className='product__param'>65</p>
+                  <p className='product__param'>{currentProduct?.attributes.prots}</p>
                 </div>
                 <div>
                   <p>ж</p>
-                  <p className='product__param'>64</p>
+                  <p className='product__param'>{currentProduct?.attributes.fats}</p>
                 </div>
                 <div>
                   <p>у</p>
-                  <p className='product__param'>84</p>
+                  <p className='product__param'>{currentProduct?.attributes.carbs}</p>
                 </div>
               </div>
             </div>

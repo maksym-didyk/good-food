@@ -1,12 +1,53 @@
 import React from 'react';
-import './HomePage.scss'
+import './HomePage.scss';
+import '../../assets/styles/scss/loader.scss';
 import { Header } from '../../components/Header';
 import { Accordion, Tab, Tabs } from 'react-bootstrap';
 import { Footer } from '../../components/Footer';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import imgAboutUs from '../../assets/images/about-us.png';
+import { Product } from '../../types/Product';
+import { HomePageType } from '../../types/HomePage';
+import { MutatingDots } from 'react-loader-spinner';
+import { client } from '../../utils/fetchClient';
 
 export const HomePage = () => {
+  const [products, setProducts] = React.useState<Product[]>([]);
+  const [homeData, setHomeData] = React.useState<HomePageType>();
+  const [isLoading, seIsLoading] = React.useState(true);
+
+  const loadData = async () => {
+    const homeDataApi = await client.get<any>('/home-page');
+    const productsDataApi = await client.get<any>('/products?sort=price');
+
+    setHomeData(homeDataApi.data);
+    setProducts(productsDataApi.data);
+
+    seIsLoading(false);
+  };
+
+  React.useEffect(() => {
+    loadData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="loader">
+        <MutatingDots 
+          height="100"
+          width="100"
+          color="#c21807"
+          secondaryColor='#c21807'
+          radius='12.5'
+          ariaLabel="mutating-dots-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      </div>
+    )
+  };
+
   return (
     <div className="homepage">
       <section className='homepage__hero' id='hero'>
@@ -15,11 +56,11 @@ export const HomePage = () => {
 
         <div className='homepage__hero-section'>
           <div className='homepage__hero--title'>
-            Правильное питание без усилий у Вас дома
+            {homeData?.attributes.hero_title}
           </div>
 
           <div className='homepage__hero--text'>
-            Вас приветствует GoodFood — сервис правильного питания на каждый день.
+          {homeData?.attributes.hero_content}
           </div>
 
           <a href='#menu' className='header__button'>Заказать</a>
@@ -29,12 +70,15 @@ export const HomePage = () => {
 
       <section className='homepage__menu' id='menu'>
         
-        <h2 className='homepage__menu--title'>Рационы питания</h2>
+        <h2 className='homepage__menu--title'>{homeData?.attributes.menu_title}</h2>
 
         <div className='homepage__products'>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+
+          {products &&
+            products.map((item) => {
+              return <ProductCard product={item}/>;
+            })}
+
         </div>
       </section>
 
@@ -42,25 +86,25 @@ export const HomePage = () => {
         <div className='homepage__aboutus--content'>
           <div className='homepage__aboutus--left'>
             <div className='homepage__aboutus--title'>
-              О нас
+              {homeData?.attributes.about_title}
             </div>
 
             <div className='homepage__aboutus--text'>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id es. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id es.
+              {homeData?.attributes.about_content}
             </div>
 
             <ul className='homepage__aboutus--list'>
               <li className='homepage__aboutus--li'>
-                Modern and intuitive  food
+                Все наши меню разрабатываются шеф-поваром совместно с нутрициологом с 12-летним стажем работы.
               </li>
               <li className='homepage__aboutus--li'>
-                Full customizable goods
+                Все блюда готовятся только из качественных и свежих продуктов.
               </li>
               <li className='homepage__aboutus--li'>
-                Detailed layouts & elements
+                Мы ответственно относимся к тому, есть ли у Вас аллергия или непереносимость каких-либо продуктов и учитываем это, подбирая для Вас рацион.
               </li>
               <li className='homepage__aboutus--li'>
-                Design pattern best practice
+                Мы заботимся о наших клиентах и всегда рады обратной связи, чтобы с каждым днем совершенствоваться и радовать Вас лучшим продуктом.
               </li>
             </ul>
           </div>
@@ -73,7 +117,7 @@ export const HomePage = () => {
 
       <section className='homepage__menu' id='howitwork'>
   
-        <h2 className='homepage__menu--title'>Как это работает?</h2>
+        <h2 className='homepage__menu--title'>{homeData?.attributes.howitwork_title}</h2>
 
         <div className='homepage__products'>
 
@@ -94,11 +138,11 @@ export const HomePage = () => {
           </svg>
 
           <div className='homepage__whywecard--title'>
-            Принимаем заказ и связываемся с вами
+            Принимаем заказ и связываемся с Вами
           </div>
 
           <div className='homepage__whywecard--content'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+            Прием заказов осуществляется с 8.00 до 17.00. Мы учтем Ваши пожелания и ответим на все вопросы о рационах
           </div>
         </div>
 
@@ -112,7 +156,7 @@ export const HomePage = () => {
           </div>
 
           <div className='homepage__whywecard--content'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+            Мы заботимся о наших клиентах, поэтому все наши блюда готовятся исключительно из свежих и качественных продуктов 
           </div>
         </div>
 
@@ -130,11 +174,11 @@ export const HomePage = () => {
           </svg>
 
           <div className='homepage__whywecard--title'>
-            Бережно доставляем Ваш заказ.
+            Бережно доставляем Ваш заказ
           </div>
 
           <div className='homepage__whywecard--content'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+            Вы сами выбираете удобное для Вас время доставки, чтобы уже с утра Вы могли с комфортом насладиться своим рационом
           </div>
         </div>
 
@@ -144,11 +188,11 @@ export const HomePage = () => {
           </svg>
 
           <div className='homepage__whywecard--title'>
-            Заботимся о вас и вашем питании
+            Заботимся о вас и Вашем питании
           </div>
 
           <div className='homepage__whywecard--content'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+            Мы всегда рады обратной связи, чтобы с каждым днем становиться лучше и радовать вас наилучшими продуктами!
           </div>
         </div>
 
@@ -156,7 +200,7 @@ export const HomePage = () => {
       </section>
 
       <section className='homepage__delivery'>
-        <h2 className='homepage__menu--title'>Бесплатная доставка</h2>
+        <h2 className='homepage__menu--title'>{homeData?.attributes.delivery_title}</h2>
 
         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
           <path d="M32 56C45.2548 56 56 45.2548 56 32C56 18.7452 45.2548 8 32 8C18.7452 8 8 18.7452 8 32C8 45.2548 18.7452 56 32 56Z" stroke="#C21807" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -164,16 +208,16 @@ export const HomePage = () => {
         </svg>
 
         <div className='homepage__maptext'>
-          Бесплатная доставка каждый день
+        {homeData?.attributes.delivery_content}
           <br />
-          <span className='homepage__maptext--red'>с 18:00 до 21:00</span>
+          <span className='homepage__maptext--red'>{homeData?.attributes.delivery_time}</span>
         </div>
 
         <iframe title="GoogleMap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d51316.70461027648!2d-4.880515161089349!3d36.498755678465145!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72d809904dabdf%3A0xe6c9db907b5ecab!2z0JzQsNGA0LHQtdC70YzRjywg0JzQsNC70LDQs9CwLCDQhtGB0L_QsNC90ZbRjw!5e0!3m2!1suk!2sua!4v1695757805681!5m2!1suk!2sua" width="100%" height="490" loading="lazy" />
       </section>
 
       <section className='homepage__menu' id='faq'>
-          <h2 className='homepage__menu--title'>F.A.Q.</h2>
+          <h2 className='homepage__menu--title'>{homeData?.attributes.faq_title}</h2>
 
           <Tabs
             defaultActiveKey="nutrition"
@@ -254,18 +298,6 @@ export const HomePage = () => {
                   </Accordion.Body>
                 </Accordion.Item>
 
-                <Accordion.Item eventKey="1">
-                  <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
-                  <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </Accordion.Body>
-                </Accordion.Item>
               </Accordion>
             </Tab>
 
@@ -284,18 +316,6 @@ export const HomePage = () => {
                   </Accordion.Body>
                 </Accordion.Item>
 
-                <Accordion.Item eventKey="1">
-                  <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
-                  <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </Accordion.Body>
-                </Accordion.Item>
               </Accordion>
             </Tab>
 
@@ -314,18 +334,6 @@ export const HomePage = () => {
                   </Accordion.Body>
                 </Accordion.Item>
 
-                <Accordion.Item eventKey="1">
-                  <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
-                  <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </Accordion.Body>
-                </Accordion.Item>
               </Accordion>
             </Tab>
 
@@ -344,18 +352,6 @@ export const HomePage = () => {
                   </Accordion.Body>
                 </Accordion.Item>
 
-                <Accordion.Item eventKey="1">
-                  <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
-                  <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </Accordion.Body>
-                </Accordion.Item>
               </Accordion>
             </Tab>
           </Tabs>
@@ -366,12 +362,10 @@ export const HomePage = () => {
 
           <div className='homepage__formsection-content'>
             <div className='homepage__formsection-title'>
-              Не знаете, какое блюдо выбрать?
+              {homeData?.attributes.feedback_title}
             </div>
             <div>
-              Все наши меню разработаны под руководством нутрициолога с 12-ти летним опытом работы
-              <br />
-              <span className='red'>Камышевой Виктории.</span>
+              Все наши меню разработаны под руководством нутрициолога с 12-ти летним опытом работы <span className='red'>Камышевой Виктории.</span>
             </div>
             <div>
               Хотите получить бесплатную консультацию и узнать больше про личное сопровождение?

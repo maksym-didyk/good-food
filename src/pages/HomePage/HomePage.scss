@@ -158,6 +158,14 @@
 
     &--li {
       margin-top: 12px;
+      
+      &::before {
+        content: '';
+        background-image: url('../../assets/images/li.svg');
+        top: 50%;
+        left: - 1px;
+        transform: translateY(-50%);
+      }
     }
 
     &--image {
