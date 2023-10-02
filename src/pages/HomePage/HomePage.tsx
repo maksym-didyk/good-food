@@ -76,7 +76,7 @@ export const HomePage = () => {
 
           {products &&
             products.map((item) => {
-              return <ProductCard product={item}/>;
+              return <ProductCard key={item.id} product={item}/>;
             })}
 
         </div>
