@@ -6,7 +6,6 @@ import { Carousel, Col, Row, Tab, Tabs } from 'react-bootstrap';
 import { ProductCard } from '../ProductCard';
 import Calendar from 'react-calendar';
 import '../../assets/styles/scss/calendar.scss';
-import imgOne from '../../assets/images/1.png';
 import { useLocalStorage } from 'usehooks-ts';
 import classnames from 'classnames';
 import { Product } from '../../types/Product';
@@ -41,7 +40,8 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   };
 
   const loadProducts = async () => {
-    const productsData = await client.get<any>('/products?sort=price&populate[menu][populate]=*');
+    // const productsData = await client.get<any>('/products?sort=price&populate[menu][populate]=*');
+    const productsData = await client.get<any>('/products?sort=price&populate[0]=menu&populate[1]=menu.dish&populate[2]=menu.dish.image');
     setProducts(productsData.data);
   };
 
@@ -104,11 +104,11 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
             {currentProduct?.attributes.menu.map((item) => {
                 return (
                   <Tab key={item.id} eventKey={item.id} title={item.title}>
-                    <Row xs={1} md={2} lq={4} className="g-4">
+                    <Row xs={1} md={2} className="g-4">
                       {item.dish.map(itemdish => {
                         return (
                           <Col key={itemdish.id}>
-                            <img src={imgOne} className='product__image' alt='' />
+                            <img src={itemdish.image.data?.attributes.url} className='product__image' alt='' />
                             <p className='product__menuname'>{itemdish.title}</p>
                           </Col>
                         )

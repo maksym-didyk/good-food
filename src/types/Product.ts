@@ -7,9 +7,6 @@ export interface ProductAttributes {
   prots: string;
   fats: string;
   carbs: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
   image: {
     data: [
       id: number,
@@ -30,6 +27,16 @@ export interface ProductMenu {
     {
       id: number;
       title: string;
+      image: {
+        data: {
+          id: number;
+          attributes: {
+            name: string;
+            alternativeText: string;
+            url: string;
+          }
+        }
+      }
     }
   ]
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const API_KEY = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+const API_KEY = process.env.STRAPI_API_TOKEN;
 // const API_URL = `https://good-food-strapi.onrender.com/api`;
 const API_URL = 'https://good-food-strapi-production.up.railway.app/api';
 
