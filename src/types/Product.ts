@@ -21,7 +21,6 @@ export interface ProductAttributes {
 
 export interface ProductMenu {
   id: number;
-  day: number;
   title: string;
   dish: [
     {

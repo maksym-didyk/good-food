@@ -7,20 +7,20 @@ import { Footer } from '../../components/Footer';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import imgAboutUs from '../../assets/images/about-us.png';
 import { Product } from '../../types/Product';
-import { HomePageType } from '../../types/HomePage';
+import { HomePageAttributes } from '../../types/HomePage';
 import { MutatingDots } from 'react-loader-spinner';
 import { client } from '../../utils/fetchClient';
 
 export const HomePage = () => {
   const [products, setProducts] = React.useState<Product[]>([]);
-  const [homeData, setHomeData] = React.useState<HomePageType>();
+  const [homeData, setHomeData] = React.useState<HomePageAttributes>();
   const [isLoading, seIsLoading] = React.useState(true);
 
   const loadData = async () => {
-    const homeDataApi = await client.get<any>('/home-page');
+    const homeDataApi = await client.get<any>('/home-page?populate=faq_tabs.questions');
     const productsDataApi = await client.get<any>('/products?sort=price');
 
-    setHomeData(homeDataApi.data);
+    setHomeData(homeDataApi.data.attributes);
     setProducts(productsDataApi.data);
 
     seIsLoading(false);
@@ -33,7 +33,7 @@ export const HomePage = () => {
   if (isLoading) {
     return (
       <div className="loader">
-        <MutatingDots 
+        <MutatingDots
           height="100"
           width="100"
           color="#c21807"
@@ -56,11 +56,11 @@ export const HomePage = () => {
 
         <div className='homepage__hero-section'>
           <div className='homepage__hero--title'>
-            {homeData?.attributes.hero_title}
+            {homeData?.hero_title}
           </div>
 
           <div className='homepage__hero--text'>
-          {homeData?.attributes.hero_content}
+          {homeData?.hero_content}
           </div>
 
           <a href='#menu' className='header__button'>Заказать</a>
@@ -70,7 +70,7 @@ export const HomePage = () => {
 
       <section className='homepage__menu' id='menu'>
         
-        <h2 className='homepage__menu--title'>{homeData?.attributes.menu_title}</h2>
+        <h2 className='homepage__menu--title'>{homeData?.menu_title}</h2>
 
         <div className='homepage__products'>
 
@@ -86,11 +86,11 @@ export const HomePage = () => {
         <div className='homepage__aboutus--content'>
           <div className='homepage__aboutus--left'>
             <div className='homepage__aboutus--title'>
-              {homeData?.attributes.about_title}
+              {homeData?.about_title}
             </div>
 
             <div className='homepage__aboutus--text'>
-              {homeData?.attributes.about_content}
+              {homeData?.about_content}
             </div>
 
             <ul className='homepage__aboutus--list'>
@@ -117,7 +117,7 @@ export const HomePage = () => {
 
       <section className='homepage__menu' id='howitwork'>
   
-        <h2 className='homepage__menu--title'>{homeData?.attributes.howitwork_title}</h2>
+        <h2 className='homepage__menu--title'>{homeData?.howitwork_title}</h2>
 
         <div className='homepage__products'>
 
@@ -200,7 +200,7 @@ export const HomePage = () => {
       </section>
 
       <section className='homepage__delivery'>
-        <h2 className='homepage__menu--title'>{homeData?.attributes.delivery_title}</h2>
+        <h2 className='homepage__menu--title'>{homeData?.delivery_title}</h2>
 
         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
           <path d="M32 56C45.2548 56 56 45.2548 56 32C56 18.7452 45.2548 8 32 8C18.7452 8 8 18.7452 8 32C8 45.2548 18.7452 56 32 56Z" stroke="#C21807" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -208,152 +208,44 @@ export const HomePage = () => {
         </svg>
 
         <div className='homepage__maptext'>
-        {homeData?.attributes.delivery_content}
+        {homeData?.delivery_content}
           <br />
-          <span className='homepage__maptext--red'>{homeData?.attributes.delivery_time}</span>
+          <span className='homepage__maptext--red'>{homeData?.delivery_time}</span>
         </div>
 
         <iframe title="GoogleMap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d51316.70461027648!2d-4.880515161089349!3d36.498755678465145!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72d809904dabdf%3A0xe6c9db907b5ecab!2z0JzQsNGA0LHQtdC70YzRjywg0JzQsNC70LDQs9CwLCDQhtGB0L_QsNC90ZbRjw!5e0!3m2!1suk!2sua!4v1695757805681!5m2!1suk!2sua" width="100%" height="490" loading="lazy" />
       </section>
 
       <section className='homepage__menu' id='faq'>
-          <h2 className='homepage__menu--title'>{homeData?.attributes.faq_title}</h2>
+          <h2 className='homepage__menu--title'>{homeData?.faq_title}</h2>
 
           <Tabs
-            defaultActiveKey="nutrition"
+            defaultActiveKey="1"
             id="justify-tab-example"
             className="mb-3"
             fill
           >
-            <Tab eventKey="nutrition" title="Nutrition">
-              <div className='homepage__accordion'>
-                <Accordion defaultActiveKey="" flush>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>How are the calories calculated?</Accordion.Header>
-                    <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                      aliquip ex ea commodo consequat. Duis aute irure dolor in
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                      culpa qui officia deserunt mollit anim id est laborum.
-                    </Accordion.Body>
-                  </Accordion.Item>
+            {homeData?.faq_tabs.map(tab => {
+              return (
+                <Tab key={tab.id} eventKey={tab.id} title={tab.title}>
+                  <div className='homepage__accordion'>
+                  {tab.questions && tab.questions.map(question => {
+                    return (
+                      <Accordion key={question.id} defaultActiveKey="" flush>
+                        <Accordion.Item eventKey={String(question.id)}>
+                          <Accordion.Header>{question.question}</Accordion.Header>
+                          <Accordion.Body>
+                            {question.answer}
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      </Accordion>
+                    )
+                  })}
+                  </div>
+                </Tab>
+              )
+            })}
 
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>Do I need to eat anything else besides the meal?</Accordion.Header>
-                    <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                      aliquip ex ea commodo consequat. Duis aute irure dolor in
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                      culpa qui officia deserunt mollit anim id est laborum.
-                    </Accordion.Body>
-                  </Accordion.Item>
-
-                  <Accordion.Item eventKey="2">
-                    <Accordion.Header>Do I have to work out when eating GoodFood?</Accordion.Header>
-                    <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                      aliquip ex ea commodo consequat. Duis aute irure dolor in
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                      culpa qui officia deserunt mollit anim id est laborum.
-                    </Accordion.Body>
-                  </Accordion.Item>
-
-                  <Accordion.Item eventKey="3">
-                    <Accordion.Header>Is healthy food tasty?</Accordion.Header>
-                    <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                      aliquip ex ea commodo consequat. Duis aute irure dolor in
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                      pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                      culpa qui officia deserunt mollit anim id est laborum.
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-              </div>
-            </Tab>
-
-            <Tab eventKey="menu" title="Menu">
-              <Accordion defaultActiveKey="" flush>
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>How are the calories calculated?</Accordion.Header>
-                  <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </Accordion.Body>
-                </Accordion.Item>
-
-              </Accordion>
-            </Tab>
-
-            <Tab eventKey="meal-plans" title="Meal Plans">
-              <Accordion defaultActiveKey="" flush>
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>How are the calories calculated?</Accordion.Header>
-                  <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </Accordion.Body>
-                </Accordion.Item>
-
-              </Accordion>
-            </Tab>
-
-            <Tab eventKey="payment" title="Payment and Delivery">
-              <Accordion defaultActiveKey="" flush>
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>How are the calories calculated?</Accordion.Header>
-                  <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </Accordion.Body>
-                </Accordion.Item>
-
-              </Accordion>
-            </Tab>
-
-            <Tab eventKey="storing" title="Storing">
-              <Accordion defaultActiveKey="" flush>
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>How are the calories calculated?</Accordion.Header>
-                  <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </Accordion.Body>
-                </Accordion.Item>
-
-              </Accordion>
-            </Tab>
           </Tabs>
       </section>
 
@@ -362,7 +254,7 @@ export const HomePage = () => {
 
           <div className='homepage__formsection-content'>
             <div className='homepage__formsection-title'>
-              {homeData?.attributes.feedback_title}
+              {homeData?.feedback_title}
             </div>
             <div>
               Все наши меню разработаны под руководством нутрициолога с 12-ти летним опытом работы <span className='red'>Камышевой Виктории.</span>

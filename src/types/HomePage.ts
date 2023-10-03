@@ -10,6 +10,19 @@ export interface HomePageAttributes {
   delivery_time: string;
   faq_title: string;
   feedback_title: string;
+  faq_tabs: [
+    {
+      id: number;
+      title: string;
+      questions: [
+        {
+          id: number;
+          question: string;
+          answer: string;
+        }
+      ]
+    }
+  ]
 }
 
 export interface HomePageType {

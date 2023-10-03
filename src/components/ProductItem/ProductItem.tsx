@@ -1,5 +1,6 @@
 import React from 'react';
 import './ProductItem.scss';
+import '../../assets/styles/scss/loader.scss';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { Carousel, Col, Row, Tab, Tabs } from 'react-bootstrap';
@@ -10,6 +11,7 @@ import { useLocalStorage } from 'usehooks-ts';
 import classnames from 'classnames';
 import { Product } from '../../types/Product';
 import { client } from '../../utils/fetchClient';
+import { MutatingDots } from 'react-loader-spinner';
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -21,6 +23,7 @@ interface Props {
 export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   const [products, setProducts] = React.useState<Product[]>([]);
   const [isClick, setIsClick] = React.useState(false);
+  const [isLoading, seIsLoading] = React.useState(true);
   const [datecalendar, setDatecalendar] = React.useState<Value>(new Date());
   const [, setProduct] = useLocalStorage<string>('product', '');
   const [, setDate] = useLocalStorage<string>('date', '');
@@ -41,8 +44,10 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
   const loadProducts = async () => {
     // const productsData = await client.get<any>('/products?sort=price&populate[menu][populate]=*');
-    const productsData = await client.get<any>('/products?sort=price&populate[0]=menu&populate[1]=menu.dish&populate[2]=menu.dish.image');
+    const productsData = await client.get<any>('/products?sort=price&populate=menu.dish.image');
     setProducts(productsData.data);
+
+    seIsLoading(false);
   };
 
   const currentProduct = products.find(item => item.attributes.slug === slug);
@@ -50,6 +55,24 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   React.useEffect(() => {
     loadProducts();
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="loader">
+        <MutatingDots
+          height="100"
+          width="100"
+          color="#c21807"
+          secondaryColor='#c21807'
+          radius='12.5'
+          ariaLabel="mutating-dots-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      </div>
+    )
+  };
 
   return (
     <>
@@ -105,6 +128,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                 return (
                   <Tab key={item.id} eventKey={item.id} title={item.title}>
                     <Row xs={1} md={2} className="g-4">
+
                       {item.dish.map(itemdish => {
                         return (
                           <Col key={itemdish.id}>
@@ -113,6 +137,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                           </Col>
                         )
                       })}
+
                     </Row>
                   </Tab>
                   // <figure key={item.id} className='product__day'>{item.title}</figure>
