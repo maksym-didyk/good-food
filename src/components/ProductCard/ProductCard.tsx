@@ -14,14 +14,14 @@ export const ProductCard: React.FC <Props> = ({ small = false, product }) => {
         <div className='product-card'>
           <div className='product-card__container'>
             <Link to={`/${product.attributes.slug}`}>
-              <img src={imgPlan} alt={product?.attributes.title} />
+              <img src={imgPlan} alt={product.attributes.title} />
             </Link>
-            <div className='product-card__title'>{product?.attributes.title}</div>
+            <div className='product-card__title'>{product.attributes.title}</div>
             {small || (
               <>
-                <div className='product-card__calories'>{`${product?.attributes.kcal} ккал`}</div>
-                <div className='product-card__content'>{product?.attributes.description}</div>
-                <div className='product-card__price'>{`€  ${product?.attributes.price}`}</div>
+                <div className='product-card__calories'>{`${product.attributes.kcal} ккал`}</div>
+                <div className='product-card__content'>{product.attributes.description}</div>
+                <div className='product-card__price'>{`€  ${product.attributes.price}`}</div>
                 <div className='product-card__button'>
                   <Link to={product.attributes.slug} className='product-card__button-buy'>Заказать</Link>
                 </div>

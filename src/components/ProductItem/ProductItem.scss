@@ -105,6 +105,10 @@
     }
   }
 
+  &__image {
+    border-radius: 16px;
+  }
+
   &__energy {
     display: flex;
     flex-direction: row;

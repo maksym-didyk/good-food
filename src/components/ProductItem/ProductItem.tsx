@@ -119,7 +119,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
         <div className='product__container' id="menu">
           <div className='product__week'>
             <Tabs
-              defaultActiveKey="1"
+              defaultActiveKey={currentProduct?.attributes.menu[0].id}
               id="justify-tab-example"
               className="mb-3"
               fill
@@ -132,7 +132,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                       {item.dish.map(itemdish => {
                         return (
                           <Col key={itemdish.id}>
-                            <img src={itemdish.image.data?.attributes.url} className='product__image' alt='' />
+                            <img src={itemdish.image.data?.attributes.formats.thumbnail.url} className='product__image' alt={itemdish.image.data?.attributes.name} />
                             <p className='product__menuname'>{itemdish.title}</p>
                           </Col>
                         )

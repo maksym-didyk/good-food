@@ -33,6 +33,11 @@ export interface ProductMenu {
             name: string;
             alternativeText: string;
             url: string;
+            formats: {
+              thumbnail: {
+                url: string;
+              }
+            }
           }
         }
       }

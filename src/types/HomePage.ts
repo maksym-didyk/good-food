@@ -23,6 +23,44 @@ export interface HomePageAttributes {
       ]
     }
   ]
+  about_string: [
+    {
+      id: number;
+      string: string;
+    }
+  ]
+  howitwork: [
+    {
+      id: number;
+      title: string;
+      content: string;
+      image: {
+        data: {
+          id: number;
+          attributes: {
+            name: string;
+            alternativeText: string;
+            url: string;
+          }
+        }
+      }
+    }
+  ]
+  howitwork_image: {
+    data: {
+      id: number;
+      attributes: {
+        name: string;
+        alternativeText: string;
+        url: string;
+        formats: {
+          large: {
+            url: string;
+          }
+        }
+      }
+    }
+  }
 }
 
 export interface HomePageType {
