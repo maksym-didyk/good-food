@@ -7,13 +7,17 @@ export interface ProductAttributes {
   prots: string;
   fats: string;
   carbs: string;
+  locale: string
   image: {
     data: [
-      id: number,
-      attributes: {
-        name: string;
-        url: string;
+      {
+        id: number,
+        attributes: {
+          name: string;
+          url: string;
+        }
       }
+
     ]
   }
   menu: ProductMenu[];
@@ -22,6 +26,10 @@ export interface ProductAttributes {
 export interface ProductMenu {
   id: number;
   title: string;
+  kcal: string;
+  prots: string;
+  fats: string;
+  carbs: string;
   dish: [
     {
       id: number;

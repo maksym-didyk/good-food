@@ -16,7 +16,7 @@ export const HomePage = () => {
   const [isLoading, seIsLoading] = React.useState(true);
 
   const loadData = async () => {
-    const homeDataApi = await client.get<any>('/home-page?populate[0]=faq_tabs.questions&populate[1]=about_string.string&populate[2]=howitwork.image&populate[3]=howitwork_image');
+    const homeDataApi = await client.get<any>('/home-page?populate[0]=faq_tabs.questions&populate[1]=about_string.string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph');
     const productsDataApi = await client.get<any>('/products?sort=price');
 
     setHomeData(homeDataApi.data.attributes);
@@ -192,13 +192,13 @@ export const HomePage = () => {
               {homeData?.feedback_title}
             </div>
             <div>
-              Все наши меню разработаны под руководством нутрициолога с 12-ти летним опытом работы <span className='red'>Камышевой Виктории.</span>
+              {homeData?.feedback_paragraph.paragraph_1}
             </div>
             <div>
-              Хотите получить бесплатную консультацию и узнать больше про личное сопровождение?
+              {homeData?.feedback_paragraph.paragraph_2}
             </div>
             <div className='red'>
-              Оставьте заявку и мы свяжемся с Вами!
+              {homeData?.feedback_paragraph.paragraph_red}
             </div>
             <div>
               <button className='product-card__button-buy sp_popup_28095c1b-d2f3-45d9-8d5f-8c2149e1b539'>Оставить заявку</button>

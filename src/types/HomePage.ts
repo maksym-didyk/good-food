@@ -61,6 +61,12 @@ export interface HomePageAttributes {
       }
     }
   }
+  feedback_paragraph: {
+    id: number;
+    paragraph_1: string;
+    paragraph_2: string;
+    paragraph_red: string;
+  }
 }
 
 export interface HomePageType {

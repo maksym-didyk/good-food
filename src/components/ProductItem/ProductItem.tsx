@@ -9,7 +9,7 @@ import Calendar from 'react-calendar';
 import '../../assets/styles/scss/calendar.scss';
 import { useLocalStorage } from 'usehooks-ts';
 import classnames from 'classnames';
-import { Product } from '../../types/Product';
+import { Product, ProductMenu } from '../../types/Product';
 import { client } from '../../utils/fetchClient';
 import { MutatingDots } from 'react-loader-spinner';
 
@@ -20,11 +20,19 @@ interface Props {
   slug: string | undefined;
 }
 
+interface Energy {
+  kcal: string;
+  prots: string;
+  fats: string;
+  carbs: string;
+}
+
 export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   const [products, setProducts] = React.useState<Product[]>([]);
   const [isClick, setIsClick] = React.useState(false);
   const [isLoading, seIsLoading] = React.useState(true);
   const [datecalendar, setDatecalendar] = React.useState<Value>(new Date());
+  const [energy, setEnergy] = React.useState<Energy>({kcal: '', prots: '', fats: '', carbs: ''});
   const [, setProduct] = useLocalStorage<string>('product', '');
   const [, setDate] = useLocalStorage<string>('date', '');
 
@@ -43,7 +51,6 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   };
 
   const loadProducts = async () => {
-    // const productsData = await client.get<any>('/products?sort=price&populate[menu][populate]=*');
     const productsData = await client.get<any>('/products?sort=price&populate=menu.dish.image');
     setProducts(productsData.data);
 
@@ -52,8 +59,20 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
   const currentProduct = products.find(item => item.attributes.slug === slug);
 
+  // const fillEnergy = () => {
+  //   if (currentProduct) {
+  //     const { kcal, prots, fats, carbs } = currentProduct.attributes;
+
+  //     setEnergy({kcal, prots, fats, carbs});
+  //   }
+  // }
+
+  const handleTabChange = ({ kcal, prots, fats, carbs }: ProductMenu) => {
+    setEnergy({ kcal, prots, fats, carbs });
+  }
+
   React.useEffect(() => {
-    loadProducts();
+    loadProducts();    
   }, []);
 
   if (isLoading) {
@@ -73,6 +92,8 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
       </div>
     )
   };
+
+  console.log(energy);
 
   return (
     <>
@@ -126,7 +147,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
             >
             {currentProduct?.attributes.menu.map((item) => {
                 return (
-                  <Tab key={item.id} eventKey={item.id} title={item.title}>
+                  <Tab key={item.id} eventKey={item.id} title={item.title} onClick={() => handleTabChange(item)}>
                     <Row xs={1} md={2} className="g-4">
 
                       {item.dish.map(itemdish => {
@@ -154,19 +175,19 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
               <div className='product__params'>
                 <div>
                   <p>ккал</p>
-                  <p className='product__param'>{currentProduct?.attributes.kcal}</p>
+                  <p className='product__param'>{energy.kcal}</p>
                 </div>
                 <div>
                   <p>б</p>
-                  <p className='product__param'>{currentProduct?.attributes.prots}</p>
+                  <p className='product__param'>{energy.prots}</p>
                 </div>
                 <div>
                   <p>ж</p>
-                  <p className='product__param'>{currentProduct?.attributes.fats}</p>
+                  <p className='product__param'>{energy.fats}</p>
                 </div>
                 <div>
                   <p>у</p>
-                  <p className='product__param'>{currentProduct?.attributes.carbs}</p>
+                  <p className='product__param'>{energy.carbs}</p>
                 </div>
               </div>
             </div>
