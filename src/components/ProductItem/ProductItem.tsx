@@ -9,7 +9,7 @@ import Calendar from 'react-calendar';
 import '../../assets/styles/scss/calendar.scss';
 import { useLocalStorage } from 'usehooks-ts';
 import classnames from 'classnames';
-import { Product, ProductMenu } from '../../types/Product';
+import { Product } from '../../types/Product';
 import { client } from '../../utils/fetchClient';
 import { MutatingDots } from 'react-loader-spinner';
 
@@ -32,7 +32,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   const [isClick, setIsClick] = React.useState(false);
   const [isLoading, seIsLoading] = React.useState(true);
   const [datecalendar, setDatecalendar] = React.useState<Value>(new Date());
-  const [energy, setEnergy] = React.useState<Energy>({kcal: '', prots: '', fats: '', carbs: ''});
+  const [energy, setEnergy] = React.useState<Energy>();
   const [, setProduct] = useLocalStorage<string>('product', '');
   const [, setDate] = useLocalStorage<string>('date', '');
 
@@ -67,12 +67,16 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   //   }
   // }
 
-  const handleTabChange = ({ kcal, prots, fats, carbs }: ProductMenu) => {
-    setEnergy({ kcal, prots, fats, carbs });
+  const handleTabChange = (itemId: string | null) => {
+    if (itemId) {
+      const { kcal, prots, fats, carbs } = currentProduct?.attributes.menu.find(item => item.id === +itemId) || {kcal: '', prots: '', fats: '', carbs: ''};
+
+      setEnergy({ kcal, prots, fats, carbs });
+    }
   }
 
   React.useEffect(() => {
-    loadProducts();    
+    loadProducts(); 
   }, []);
 
   if (isLoading) {
@@ -92,8 +96,6 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
       </div>
     )
   };
-
-  console.log(energy);
 
   return (
     <>
@@ -144,10 +146,11 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
               id="justify-tab-example"
               className="mb-3"
               fill
+              onSelect={(menuId) => handleTabChange(menuId)}
             >
             {currentProduct?.attributes.menu.map((item) => {
                 return (
-                  <Tab key={item.id} eventKey={item.id} title={item.title} onClick={() => handleTabChange(item)}>
+                  <Tab key={item.id} eventKey={item.id} title={item.title}>
                     <Row xs={1} md={2} className="g-4">
 
                       {item.dish.map(itemdish => {
@@ -175,19 +178,19 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
               <div className='product__params'>
                 <div>
                   <p>ккал</p>
-                  <p className='product__param'>{energy.kcal}</p>
+                  <p className='product__param'>{energy?.kcal || currentProduct?.attributes.kcal}</p>
                 </div>
                 <div>
                   <p>б</p>
-                  <p className='product__param'>{energy.prots}</p>
+                  <p className='product__param'>{energy?.prots || currentProduct?.attributes.prots}</p>
                 </div>
                 <div>
                   <p>ж</p>
-                  <p className='product__param'>{energy.fats}</p>
+                  <p className='product__param'>{energy?.fats || currentProduct?.attributes.fats}</p>
                 </div>
                 <div>
                   <p>у</p>
-                  <p className='product__param'>{energy.carbs}</p>
+                  <p className='product__param'>{energy?.carbs || currentProduct?.attributes.carbs}</p>
                 </div>
               </div>
             </div>
