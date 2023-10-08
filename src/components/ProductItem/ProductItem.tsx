@@ -144,13 +144,18 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
             <Tabs
               defaultActiveKey={currentProduct?.attributes.menu[0].id}
               id="justify-tab-example"
-              className="mb-3"
+              className="mb-3 product__tab"
               fill
               onSelect={(menuId) => handleTabChange(menuId)}
             >
             {currentProduct?.attributes.menu.map((item) => {
+
                 return (
-                  <Tab key={item.id} eventKey={item.id} title={item.title}>
+                  <Tab
+                    key={item.id}
+                    eventKey={item.id}
+                    title={item.title}
+                  >
                     <Row xs={1} md={2} className="g-4">
 
                       {item.dish.map(itemdish => {

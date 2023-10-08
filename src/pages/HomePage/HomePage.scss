@@ -9,10 +9,6 @@
     width: 100%;
     height: 100vh;
 
-    @include onPhone {
-      background: #111114;
-    }
-
     &-section {
       padding: 222px 0 0 70px;
       display: flex;
