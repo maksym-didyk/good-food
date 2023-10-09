@@ -184,6 +184,11 @@
     color: #121214;
     text-align: center;
 
+    &--image {
+      height: 70px;
+      width: 70px;
+    }
+
     &--title {
       font-size: 24px;
       font-weight: 700;
@@ -225,6 +230,10 @@
     flex-direction: row;
     background: #1D1D1D;
 
+    @include onPhone {
+      flex-wrap: wrap;
+    }
+
     &-imagewrapper {
       background-image: url('../../assets/images/photo_formsection.png');
       background-size: cover;
@@ -233,7 +242,7 @@
       width: 710px;
 
       @include onPhone {
-        display: none;
+        height: 300px;
       }
     }
 

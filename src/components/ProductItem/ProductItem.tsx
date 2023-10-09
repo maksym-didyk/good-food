@@ -155,7 +155,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                     key={item.id}
                     eventKey={item.id}
                     title={item.title}
-                    className=''
+                    className='mb-3'
                   >
                     <Row xs={1} md={2} className="g-4">
 
@@ -176,7 +176,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
             </Tabs>
           </div>
 
-          <div>
+          <div className='product__date'>
             <div className='product__energy'>
               <div className='product__daily'>
                 Daily average

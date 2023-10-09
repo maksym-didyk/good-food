@@ -118,7 +118,7 @@ export const HomePage = () => {
         {homeData?.howitwork.map(item => {
           return (
             <div key={item.id} className='homepage__whywecard'>
-              <img src={item.image.data.attributes.url} alt={item.image.data.attributes.alternativeText} />
+              <img className='homepage__whywecard--image' src={item.image.data.attributes.url} alt={item.image.data.attributes.alternativeText} />
 
               <div className='homepage__whywecard--title'>
                 {item.title}
