@@ -125,7 +125,17 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
             <div>
               <div className='product__products'>
-              <Carousel interval={3000}>
+                <Row xs={1} md={1} lg={2} xl={2} className="g-4">
+                    {products.filter(item => item.id !== currentProduct?.id).map(product => {
+                      return (
+                        <Col key={product.id}>
+                          <ProductCard small={true} product={product} />
+                        </Col>
+                      )
+                    })}
+                </Row>
+
+              {/* <Carousel interval={3000}>
               {products &&
                 products.map((item) => {
                   return (
@@ -134,7 +144,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                   </Carousel.Item>
                   )
                 })}
-              </Carousel>
+              </Carousel> */}
               </div>
             </div>
         </div>
@@ -161,7 +171,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
                       {item.dish.map(itemdish => {
                         return (
-                          <Col key={itemdish.id}>
+                          <Col key={itemdish.id} className='m-auto'>
                             <img src={itemdish.image.data?.attributes.formats.thumbnail.url} className='product__image' alt={itemdish.image.data?.attributes.name} />
                             <p className='product__menuname'>{itemdish.title}</p>
                           </Col>

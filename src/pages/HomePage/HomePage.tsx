@@ -203,6 +203,9 @@ export const HomePage = () => {
             <div>
               <button className='product-card__button-buy sp_popup_28095c1b-d2f3-45d9-8d5f-8c2149e1b539'>Оставить заявку</button>
             </div>
+            <div className='homepage__formsection-policy'>
+              Нажимая на кнопку, вы соглашаетесь с Политикой конфиденциальности
+            </div>
           </div>
 
 

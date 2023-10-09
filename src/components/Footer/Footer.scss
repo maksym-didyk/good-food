@@ -1,7 +1,7 @@
 @import '../../assets/styles/scss/mixins';
 
 .footer {
-  padding: 120px 70px;
+  padding: 120px 70px 20px;
   width: 90%;
 
   @include onTablet {

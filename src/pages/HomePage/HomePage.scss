@@ -92,7 +92,7 @@
   }
 
   &__aboutus {
-    padding: 90px 70px 190px;
+    padding: 90px 70px;
     background: #111114;
 
     @include onTablet {
@@ -109,8 +109,8 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-      align-items: flex-start;
-      gap: 130px;
+      align-items: center;
+      gap: 30px;
       text-align: left;
       color: #FFF;
 
@@ -154,23 +154,34 @@
 
     &--li {
       margin-top: 12px;
+      margin-left: 16px;
+      padding-left: 16px;
+      position: relative;
       
       &::before {
         content: '';
-        background-image: url('../../assets/images/li.svg');
+        height: 24px;
+        width: 24px;
+        border: 2px solid #C21807;
+        border-radius: 50%;;
+        position: absolute;
         top: 50%;
-        left: - 1px;
+        left: - 16px;
         transform: translateY(-50%);
+
+        @include onPhone {
+          top: 30%;
+        }
       }
     }
 
     &--image {
-      max-width: 637px;
-      height: auto;
+      max-height: 550px;
       border-radius: 16px;
 
       @include onTablet {
         width: 100%;
+        height: auto;
       }
 
       @include onPhone{
@@ -230,7 +241,7 @@
     flex-direction: row;
     background: #1D1D1D;
 
-    @include onPhone {
+    @include onTablet {
       flex-wrap: wrap;
     }
 
@@ -239,10 +250,12 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: top center;
-      width: 710px;
+      min-width: 710px;
+      min-height: 798px;
 
-      @include onPhone {
-        height: 300px;
+      @include onTablet {
+        min-width: 100%;
+        height: 600px;
       }
     }
 
@@ -271,6 +284,15 @@
       @include onPhone {
         font-size: 40px;
       }
+    }
+
+    &-policy {
+      display: flex;
+      justify-content: center;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 16px;
     }
 
     .red {

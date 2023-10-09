@@ -56,7 +56,7 @@
   &__container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 40px;
     padding: 100px 70px 0;
 
@@ -110,7 +110,7 @@
   }
 
   &__products {
-    max-width: 310px;
+    // max-width: 310px;
   }
 
   &__week {
