@@ -1,6 +1,5 @@
 import React from 'react';
 import './ProductCard.scss';
-import imgPlan from '../../assets/images/light.png';
 import { Link } from 'react-router-dom';
 import { Product } from '../../types/Product';
 
