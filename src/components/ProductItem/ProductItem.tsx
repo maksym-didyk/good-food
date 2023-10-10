@@ -3,7 +3,7 @@ import './ProductItem.scss';
 import '../../assets/styles/scss/loader.scss';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
-import { Carousel, Col, Row, Tab, Tabs } from 'react-bootstrap';
+import { Col, Row, Tab, Tabs } from 'react-bootstrap';
 import { ProductCard } from '../ProductCard';
 import Calendar from 'react-calendar';
 import '../../assets/styles/scss/calendar.scss';
@@ -134,17 +134,6 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                       )
                     })}
                 </Row>
-
-              {/* <Carousel interval={3000}>
-              {products &&
-                products.map((item) => {
-                  return (
-                    <Carousel.Item key={item.id}>
-                      <ProductCard small={true} product={item} />
-                  </Carousel.Item>
-                  )
-                })}
-              </Carousel> */}
               </div>
             </div>
         </div>
