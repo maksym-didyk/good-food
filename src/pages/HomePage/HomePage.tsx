@@ -17,7 +17,7 @@ export const HomePage = () => {
 
   const loadData = async () => {
     const homeDataApi = await client.get<any>('/home-page?populate[0]=faq_tabs.questions&populate[1]=about_string.string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph');
-    const productsDataApi = await client.get<any>('/products?sort=price');
+    const productsDataApi = await client.get<any>('/products?sort=price&populate=image');
 
     setHomeData(homeDataApi.data.attributes);
     setProducts(productsDataApi.data);
@@ -135,7 +135,7 @@ export const HomePage = () => {
       </section>
 
       <section className='homepage__delivery'>
-        <h2 className='homepage__menu--title'>{homeData?.delivery_title}</h2>
+        <h2 className='homepage__menu--title homepage__delivery--title'>{homeData?.delivery_title}</h2>
 
         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
           <path d="M32 56C45.2548 56 56 45.2548 56 32C56 18.7452 45.2548 8 32 8C18.7452 8 8 18.7452 8 32C8 45.2548 18.7452 56 32 56Z" stroke="#C21807" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -156,7 +156,7 @@ export const HomePage = () => {
 
           <Tabs
             defaultActiveKey="1"
-            id="justify-tab-example"
+            id="justify-tab"
             className="mb-3"
             fill
           >
@@ -166,10 +166,10 @@ export const HomePage = () => {
                   <div className='homepage__accordion'>
                   {tab.questions && tab.questions.map(question => {
                     return (
-                      <Accordion key={question.id} defaultActiveKey="" flush>
+                      <Accordion key={question.id} flush>
                         <Accordion.Item eventKey={String(question.id)}>
-                          <Accordion.Header>{question.question}</Accordion.Header>
-                          <Accordion.Body>
+                          <Accordion.Header><b>{question.question}</b></Accordion.Header>
+                          <Accordion.Body style={{ width: '95%' }}>
                             {question.answer}
                           </Accordion.Body>
                         </Accordion.Item>

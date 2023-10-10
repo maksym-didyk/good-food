@@ -1,5 +1,15 @@
 @import '../../assets/styles/scss/mixins';
 
+.accordion-item {
+  --bs-accordion-active-bg: transparent;
+  --bs-accordion-btn-focus-box-shadow: transparent;
+  // --bs-accordion-color: #C21807;
+  --bs-accordion-btn-color: #C21807;
+  --bs-accordion-active-color: #C21807;
+  --bs-accordion-btn-icon: url('../../assets/images/arrow.svg');
+  --bs-accordion-btn-active-icon: url('../../assets/images/arrow.svg');
+}
+
 .homepage {
   &__hero{
     background: url(../../assets/images/crop-plate-with-savory-salad.jpg);
@@ -81,6 +91,10 @@
 
   &__delivery {
     text-align: center;
+
+    &--title {
+      margin-bottom: 40px;
+    }
   }
 
   &__products {
@@ -229,7 +243,7 @@
   }
 
   &__accordion {
-    width: 60%;
+    width: 50%;
 
     @include onPhone {
       width: 100%;

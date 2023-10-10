@@ -51,13 +51,14 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   };
 
   const loadProducts = async () => {
-    const productsData = await client.get<any>('/products?sort=price&populate=menu.dish.image');
+    const productsData = await client.get<any>('/products?sort=price&populate[0]=image&populate[1]=menu.dish.image');
     setProducts(productsData.data);
 
     seIsLoading(false);
   };
 
   const currentProduct = products.find(item => item.attributes.slug === slug);
+  const price = currentProduct?.attributes.price.toFixed(2);
 
   // const fillEnergy = () => {
   //   if (currentProduct) {
@@ -117,7 +118,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                   className = 'product-card__button-buy product__button'
                 >
                   от &nbsp;
-                  <span className='product__buttonprice'>{`€${currentProduct?.attributes.price}`}</span>
+                  <span className='product__buttonprice'>{`€${price}`}</span>
                   &nbsp; / день
                 </a>
               </div>

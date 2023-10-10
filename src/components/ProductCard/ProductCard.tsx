@@ -15,7 +15,7 @@ export const ProductCard: React.FC <Props> = ({ small = false, product }) => {
         <div className='product-card'>
           <div className='product-card__container'>
             <Link to={`/${product.attributes.slug}`}>
-              <img src={imgPlan} alt={product.attributes.title} />
+              <img src={product.attributes.image.data[0].attributes.url} alt={product.attributes.title} />
             </Link>
             <div className='product-card__title'>{product.attributes.title}</div>
             {small || (
