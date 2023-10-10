@@ -45,11 +45,11 @@
 
 .product {
   &__header {
-    background: #000;
-    background: url(../../assets/images/crop-plate-with-savory-salad.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    // background: #000;
+    // background: url(../../assets/images/crop-plate-with-savory-salad.jpg);
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-position: center;
     height: 146px;
   }
 
@@ -107,10 +107,6 @@
   &__buttonprice {
     font-size: 40px;
     font-weight: 700;
-  }
-
-  &__products {
-    // max-width: 310px;
   }
 
   &__week {

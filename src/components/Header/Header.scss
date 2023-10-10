@@ -49,6 +49,10 @@
     font-size: 18px;
     font-weight: 400;
     text-decoration: none;
+
+    &--black {
+      color: #000;
+    }
   }
 
   &__button {
@@ -74,6 +78,7 @@
       background: transparent;
       border: 1px solid #C21807;
       background: transparent;
+      color:#000;
     }
 
     @include onPhone {

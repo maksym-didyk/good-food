@@ -101,7 +101,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
     <>
       <div className='product'>
         <div className='product__header'>
-          <Header />
+          <Header isBlack={true} />
         </div>
 
         <div className='product__container'>
@@ -220,7 +220,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
           </div>
         </div>
 
-        <Footer />
+        <Footer isBlack={true} />
       </div>      
     </>
   );
