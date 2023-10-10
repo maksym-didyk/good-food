@@ -3,7 +3,7 @@ import './ProductItem.scss';
 import '../../assets/styles/scss/loader.scss';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
-import { Col, Row, Tab, Tabs } from 'react-bootstrap';
+import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import { ProductCard } from '../ProductCard';
 import Calendar from 'react-calendar';
 import '../../assets/styles/scss/calendar.scss';
@@ -129,15 +129,17 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
             <div>
               <div className='product__products'>
-                <Row xs={1} md={1} lg={2} xl={2} className="g-4">
-                    {products.filter(item => item.id !== currentProduct?.id).map(product => {
-                      return (
-                        <Col key={product.id}>
-                          <ProductCard small={true} product={product} />
-                        </Col>
-                      )
-                    })}
-                </Row>
+                <Container className='text-center'>
+                  <Row xs={1} md={1} lg={1} xl={2} className='text-center g-4'>
+                      {products.filter(item => item.id !== currentProduct?.id).map(product => {
+                        return (
+                          <Col key={product.id} className='justify-content-center text-center'>
+                            <ProductCard small={true} product={product} />
+                          </Col>
+                        )
+                      })}
+                  </Row>
+                </Container>
               </div>
             </div>
         </div>
@@ -165,7 +167,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
                       {item.dish.map(itemdish => {
                         return (
-                          <Col key={itemdish.id} className='mx-auto'>
+                          <Col key={itemdish.id} className=''>
                             <img src={itemdish.image.data?.attributes.formats.thumbnail.url} className='product__image' alt={itemdish.image.data?.attributes.name} />
                             <p className='product__menuname'>{itemdish.title}</p>
                           </Col>
