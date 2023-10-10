@@ -33,6 +33,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   const [isLoading, seIsLoading] = React.useState(true);
   const [datecalendar, setDatecalendar] = React.useState<Value>(new Date());
   const [energy, setEnergy] = React.useState<Energy>();
+  const [keyTab, setKeyTab] = React.useState('');
   const [, setProduct] = useLocalStorage<string>('product', '');
   const [, setDate] = useLocalStorage<string>('date', '');
 
@@ -73,12 +74,14 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
       const { kcal, prots, fats, carbs } = currentProduct?.attributes.menu.find(item => item.id === +itemId) || {kcal: '', prots: '', fats: '', carbs: ''};
 
       setEnergy({ kcal, prots, fats, carbs });
+
+      setKeyTab(itemId);
     }
   }
 
   React.useEffect(() => {
     loadProducts(); 
-  }, []);
+  }, [products, currentProduct]);
 
   if (isLoading) {
     return (
@@ -142,8 +145,9 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
         <div className='product__container' id="menu">
           <div className='product__week'>
             <Tabs
-              defaultActiveKey={currentProduct?.attributes.menu[0].id}
-              id="justify-tab-example"
+              // defaultActiveKey={currentProduct?.attributes.menu[0].id}
+              activeKey={keyTab || currentProduct?.attributes.menu[0].id}
+              id="justify-tab"
               className="mb-3"
               fill
               onSelect={(menuId) => handleTabChange(menuId)}
@@ -157,11 +161,11 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                     title={item.title}
                     className='mb-3'
                   >
-                    <Row xs={1} md={2} className="g-4">
+                    <Row sm={1} md={1} lg={2} className="g-4">
 
                       {item.dish.map(itemdish => {
                         return (
-                          <Col key={itemdish.id} className='m-auto'>
+                          <Col key={itemdish.id} className='mx-auto'>
                             <img src={itemdish.image.data?.attributes.formats.thumbnail.url} className='product__image' alt={itemdish.image.data?.attributes.name} />
                             <p className='product__menuname'>{itemdish.title}</p>
                           </Col>
@@ -220,7 +224,8 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
           </div>
           </div>
         </div>
-
+        
+        <div className='product__devider'></div>
         <Footer isBlack={true} />
       </div>      
     </>
