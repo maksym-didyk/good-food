@@ -61,14 +61,6 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   const currentProduct = products.find(item => item.attributes.slug === slug);
   const price = currentProduct?.attributes.price.toFixed(2);
 
-  // const fillEnergy = () => {
-  //   if (currentProduct) {
-  //     const { kcal, prots, fats, carbs } = currentProduct.attributes;
-
-  //     setEnergy({kcal, prots, fats, carbs});
-  //   }
-  // }
-
   const handleTabChange = (itemId: string | null) => {
     if (itemId) {
       const { kcal, prots, fats, carbs } = currentProduct?.attributes.menu.find(item => item.id === +itemId) || {kcal: '', prots: '', fats: '', carbs: ''};
@@ -127,27 +119,25 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
               </div>
             </div>
 
-            <div>
-              <div className='product__products'>
-                <Container className='text-center'>
-                  <Row xs={1} md={1} lg={1} xl={2} className='text-center g-4'>
-                      {products.filter(item => item.id !== currentProduct?.id).map(product => {
-                        return (
-                          <Col key={product.id} className='justify-content-center text-center'>
-                            <ProductCard small={true} product={product} isClick={() => setKeyTab('')}/>
-                          </Col>
-                        )
-                      })}
-                  </Row>
-                </Container>
-              </div>
+            <div className='product__products'>
+              <Container>
+                <Row xs={1} md={1} lg={1} xl={2} className='g-4'>
+                    {products.filter(item => item.id !== currentProduct?.id).map(product => {
+                      return (
+                        <Col key={product.id} className='d-flex justify-content-center'>
+                          <ProductCard small={true} product={product} isClick={() => setKeyTab('')}/>
+                        </Col>
+                      )
+                    })}
+                </Row>
+              </Container>
             </div>
+
         </div>
 
         <div className='product__container' id="menu">
           <div className='product__week'>
             <Tabs
-              // defaultActiveKey={currentProduct?.attributes.menu[0].id}
               activeKey={keyTab || currentProduct?.attributes.menu[0].id}
               id="justify-tab"
               className="mb-3"
@@ -163,11 +153,11 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                     title={item.title}
                     className='mb-3'
                   >
-                    <Row sm={1} md={1} lg={2} className="g-4">
+                    <Row sm={1} md={1} lg={1} xl={2} className="g-4">
 
                       {item.dish.map(itemdish => {
                         return (
-                          <Col key={itemdish.id} className=''>
+                          <Col key={itemdish.id} className='text-center'>
                             <img src={itemdish.image.data?.attributes.formats.thumbnail.url} className='product__image' alt={itemdish.image.data?.attributes.name} />
                             <p className='product__menuname'>{itemdish.title}</p>
                           </Col>
@@ -176,7 +166,6 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
                     </Row>
                   </Tab>
-                  // <figure key={item.id} className='product__day'>{item.title}</figure>
                 )
             })}
             </Tabs>
