@@ -134,7 +134,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                       {products.filter(item => item.id !== currentProduct?.id).map(product => {
                         return (
                           <Col key={product.id} className='justify-content-center text-center'>
-                            <ProductCard small={true} product={product} />
+                            <ProductCard small={true} product={product} isClick={() => setKeyTab('')}/>
                           </Col>
                         )
                       })}
