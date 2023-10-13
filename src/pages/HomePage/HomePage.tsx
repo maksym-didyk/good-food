@@ -2,7 +2,7 @@ import React from 'react';
 import './HomePage.scss';
 import '../../assets/styles/scss/loader.scss';
 import { Header } from '../../components/Header';
-import { Accordion, Tab, Tabs } from 'react-bootstrap';
+import { Accordion, Carousel, Tab, Tabs } from 'react-bootstrap';
 import { Footer } from '../../components/Footer';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { Product } from '../../types/Product';
@@ -16,7 +16,7 @@ export const HomePage = () => {
   const [isLoading, seIsLoading] = React.useState(true);
 
   const loadData = async () => {
-    const homeDataApi = await client.get<any>('/home-page?populate[0]=faq_tabs.questions&populate[1]=about_string.string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph');
+    const homeDataApi = await client.get<any>('/home-page?populate[0]=faq_tabs.questions&populate[1]=about_string.string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph&populate[5]=comment.icon');
     const productsDataApi = await client.get<any>('/products?sort=price&populate=image');
 
     setHomeData(homeDataApi.data.attributes);
@@ -132,6 +132,43 @@ export const HomePage = () => {
         })}
 
         </div>
+      </section>
+
+      <section className='homepage__comments'>
+        <h2 className='homepage__menu--title'>Наши отзывы</h2>
+          <div>
+            <Carousel>
+            {homeData?.comment.map(comment => {
+              return (
+                <Carousel.Item key={comment.id}>
+                  <div className='homepage__comment'>
+                    <div className='homepage__comment-content'>
+                      <p>
+                        {comment.comment}
+                      </p>
+                      <p>
+                        {comment.icon.data && (
+                          <img src={comment.icon.data.attributes.url} alt='Source comment icon' className='homepage__comment-icon'/>
+                        )}
+                        <b>
+                          {comment.url
+                            ? (
+                                <a href={comment.url} target='_blank' className='homepage__comment-link'>{comment.author}</a>
+                              )
+                            
+                            : (comment.author)
+                          }
+                        </b>
+                      </p>
+                    </div>
+                  </div>
+                </Carousel.Item>
+                )
+            })}
+
+
+            </Carousel>
+          </div>
       </section>
 
       <section className='homepage__delivery'>

@@ -67,6 +67,22 @@ export interface HomePageAttributes {
     paragraph_2: string;
     paragraph_red: string;
   }
+  comment: [
+    {
+      id: number;
+      url: string;
+      author: string;
+      comment: string;
+      icon: {
+        data: {
+          id: number;
+          attributes: {
+            url: string;
+          }
+        }
+      }
+    }
+  ]
 }
 
 export interface HomePageType {
