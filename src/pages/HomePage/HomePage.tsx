@@ -224,7 +224,7 @@ export const HomePage = () => {
       </section>
 
       <section className='homepage__formsection'>
-          <img src={homeData?.feedback_paragraph.image.data.attributes.url} className='homepage__formsection-image' />
+          <img src={homeData?.feedback_paragraph.image.data.attributes.url} alt='Photo Victoriya' className='homepage__formsection-image' />
 
           <div className='homepage__formsection-content'>
             <div className='homepage__formsection-title'>
