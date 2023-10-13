@@ -66,6 +66,14 @@ export interface HomePageAttributes {
     paragraph_1: string;
     paragraph_2: string;
     paragraph_red: string;
+    image: {
+      data: {
+        id: number;
+        attributes: {
+          url: string;
+        }
+      }
+    }
   }
   comment: [
     {

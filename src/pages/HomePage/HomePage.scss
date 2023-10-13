@@ -13,10 +13,6 @@
   background-color: #C21807;
 }
 
-// .carousel-control-next-icon {
-//   background-image: url('../../assets/images/ep_arrow-up-bold.svg');
-// }
-
 .carousel-control-prev-icon, .carousel-control-next-icon {
     display: inline-block;
     width: 5rem;
@@ -346,11 +342,9 @@
       flex-wrap: wrap;
     }
 
-    &-imagewrapper {
-      background-image: url('../../assets/images/photo_formsection.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: top center;
+    &-image {
+      object-fit: cover;
+      object-position: top center;
       min-width: 710px;
       min-height: 798px;
 
