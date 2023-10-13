@@ -137,29 +137,31 @@ export const HomePage = () => {
       <section className='homepage__comments'>
         <h2 className='homepage__menu--title'>Наши отзывы</h2>
           <div>
-            <Carousel>
+            <Carousel variant='dark'>
             {homeData?.comment.map(comment => {
               return (
                 <Carousel.Item key={comment.id}>
-                  <div className='homepage__comment'>
-                    <div className='homepage__comment-content'>
-                      <p>
-                        {comment.comment}
-                      </p>
-                      <p>
-                        {comment.icon.data && (
-                          <img src={comment.icon.data.attributes.url} alt='Source comment icon' className='homepage__comment-icon'/>
-                        )}
-                        <b>
-                          {comment.url
-                            ? (
-                                <a href={comment.url} target='_blank' className='homepage__comment-link'>{comment.author}</a>
-                              )
-                            
-                            : (comment.author)
-                          }
-                        </b>
-                      </p>
+                  <div className='homepage__commentwrapper'>
+                    <div className='homepage__comment'>
+                      <div className='homepage__comment-content'>
+                        <p>
+                          {comment.comment}
+                        </p>
+                        <p>
+                          {comment.icon.data && (
+                            <img src={comment.icon.data.attributes.url} alt='Source comment icon' className='homepage__comment-icon'/>
+                          )}
+                          <b>
+                            {comment.url
+                              ? (
+                                  <a href={comment.url} target='_blank' className='homepage__comment-link'>{comment.author}</a>
+                                )
+                              
+                              : (comment.author)
+                            }
+                          </b>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </Carousel.Item>

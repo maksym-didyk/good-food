@@ -3,11 +3,14 @@
 .accordion-item {
   --bs-accordion-active-bg: transparent;
   --bs-accordion-btn-focus-box-shadow: transparent;
-  // --bs-accordion-color: #C21807;
   --bs-accordion-btn-color: #C21807;
   --bs-accordion-active-color: #C21807;
   --bs-accordion-btn-icon: url('../../assets/images/arrow.svg');
   --bs-accordion-btn-active-icon: url('../../assets/images/arrow.svg');
+}
+
+.carousel-dark .carousel-indicators [data-bs-target] {
+  background-color: #C21807;
 }
 
 .homepage {
@@ -227,16 +230,20 @@
     }
   }
 
+  &__commentwrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
   &__comments {
-    padding: 0 120px 120px;
+    padding: 0 70px 120px;
 
     @include onTablet {
-      width: 100%;
       padding: 120px 40px;
     }
 
     @include onPhone {
-      width: 100%;
       padding: 100px 20px;
     }
   }
@@ -247,12 +254,11 @@
     align-items: center;
     align-self: center;
     align-content: center;
-    width: 100%;
+    width: 80%;
     height: 300px;
     flex-shrink: 0;
     border-radius: 16px;
     background: #1D1D1D;
-    // box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.10), 5px 0px 11px 0px rgba(0, 0, 0, 0.10), 20px 0px 20px 0px rgba(0, 0, 0, 0.09), 46px 0px 27px 0px rgba(0, 0, 0, 0.05), 81px 0px 33px 0px rgba(0, 0, 0, 0.01), 127px 0px 36px 0px rgba(0, 0, 0, 0.00);
     text-align: center;
     font-size: 18px;
     font-weight: 400;
