@@ -13,9 +13,26 @@
   background-color: #C21807;
 }
 
+// .carousel-control-next-icon {
+//   background-image: url('../../assets/images/ep_arrow-up-bold.svg');
+// }
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    display: inline-block;
+    width: 5rem;
+    height: 20rem;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 100% 100%;
+
+    @include onPhone {
+      display: none;
+    }
+}
+
 .homepage {
   &__hero{
-    background: url(../../assets/images/crop-plate-with-savory-salad.jpg);
+    background: url('../../assets/images/crop-plate-with-savory-salad.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
