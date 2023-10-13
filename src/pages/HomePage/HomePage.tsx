@@ -154,7 +154,7 @@ export const HomePage = () => {
                           <b>
                             {comment.url
                               ? (
-                                  <a href={comment.url} target='_blank' className='homepage__comment-link'>{comment.author}</a>
+                                  <a href={comment.url} className='homepage__comment-link'>{comment.author}</a>
                                 )
                               
                               : (comment.author)
