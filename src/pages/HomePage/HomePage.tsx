@@ -16,7 +16,7 @@ export const HomePage = () => {
   const [isLoading, seIsLoading] = React.useState(true);
 
   const loadData = async () => {
-    const homeDataApi = await client.get<any>('/home-page?populate[0]=faq_tabs.questions&populate[1]=about_string.string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph.image&populate[5]=comment.icon');
+    const homeDataApi = await client.get<any>('/home-page?populate[0]=faq_tabs.questions&populate[1]=about_string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph.image&populate[5]=comment.icon');
     const productsDataApi = await client.get<any>('/products?sort=price&populate=image');
 
     setHomeData(homeDataApi.data.attributes);
@@ -135,7 +135,7 @@ export const HomePage = () => {
       </section>
 
       <section className='homepage__comments'>
-        <h2 className='homepage__menu--title'>Наши отзывы</h2>
+        <h2 className='homepage__menu--title'>{homeData?.comments_title}</h2>
           <div>
             <Carousel variant='dark'>
             {homeData?.comment.map(comment => {
@@ -224,7 +224,7 @@ export const HomePage = () => {
       </section>
 
       <section className='homepage__formsection'>
-          <img src={homeData?.feedback_paragraph.image.data.attributes.url} alt='Photo Victoriya' className='homepage__formsection-image' />
+          <img src={homeData?.feedback_paragraph.image.data.attributes.url} alt='Kamysheva Viktoriia' className='homepage__formsection-image' />
 
           <div className='homepage__formsection-content'>
             <div className='homepage__formsection-title'>

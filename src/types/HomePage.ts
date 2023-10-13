@@ -10,6 +10,8 @@ export interface HomePageAttributes {
   delivery_time: string;
   faq_title: string;
   feedback_title: string;
+  comments_title: string;
+  locale: string;
   faq_tabs: [
     {
       id: number;
