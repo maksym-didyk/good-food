@@ -240,7 +240,7 @@ export const HomePage = () => {
               {homeData?.feedback_paragraph.paragraph_red}
             </div>
             <div>
-              <button className='product-card__button-buy sp_popup_28095c1b-d2f3-45d9-8d5f-8c2149e1b539'>Оставить заявку</button>
+              <button className='product-card__button-buy sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f'>Оставить заявку</button>
             </div>
             <div className='homepage__formsection-policy'>
               Нажимая на кнопку, вы соглашаетесь с Политикой конфиденциальности
