@@ -20,11 +20,19 @@ interface Props {
   slug: string | undefined;
 }
 
+interface Energy {
+  kcal: string;
+  prots: string;
+  fats: string;
+  carbs: string;
+}
+
 export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   const [products, setProducts] = React.useState<Product[]>([]);
   const [isClick, setIsClick] = React.useState(false);
   const [isLoading, seIsLoading] = React.useState(true);
   const [datecalendar, setDatecalendar] = React.useState<Value>(new Date());
+  const [energy, setEnergy] = React.useState<Energy>();
   const [keyTab, setKeyTab] = React.useState('');
   const [, setProduct] = useLocalStorage<string>('product', '');
   const [, setDate] = useLocalStorage<string>('date', '');
@@ -52,6 +60,16 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
   const currentProduct = products.find(item => item.attributes.slug === slug);
   const price = currentProduct?.attributes.price.toFixed(2);
+
+  const handleTabChange = (itemId: string | null) => {
+    if (itemId) {
+      const { kcal, prots, fats, carbs } = currentProduct?.attributes.menu.find(item => item.id === +itemId) || {kcal: '', prots: '', fats: '', carbs: ''};
+
+      setEnergy({ kcal, prots, fats, carbs });
+
+      setKeyTab(itemId);
+    }
+  }
 
   React.useEffect(() => {
     loadProducts(); 
@@ -124,6 +142,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
               id="justify-tab"
               className="mb-3"
               fill
+              onSelect={(menuId) => handleTabChange(menuId)}
             >
             {currentProduct?.attributes.menu.map((item) => {
 
@@ -160,19 +179,19 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
               <div className='product__params'>
                 <div>
                   <p>ккал</p>
-                  <p className='product__param'>{currentProduct?.attributes.kcal}</p>
+                  <p className='product__param'>{energy?.kcal || currentProduct?.attributes.kcal}</p>
                 </div>
                 <div>
                   <p>б</p>
-                  <p className='product__param'>{currentProduct?.attributes.prots}</p>
+                  <p className='product__param'>{energy?.prots || currentProduct?.attributes.prots}</p>
                 </div>
                 <div>
                   <p>ж</p>
-                  <p className='product__param'>{currentProduct?.attributes.fats}</p>
+                  <p className='product__param'>{energy?.fats || currentProduct?.attributes.fats}</p>
                 </div>
                 <div>
                   <p>у</p>
-                  <p className='product__param'>{currentProduct?.attributes.carbs}</p>
+                  <p className='product__param'>{energy?.carbs || currentProduct?.attributes.carbs}</p>
                 </div>
               </div>
             </div>
