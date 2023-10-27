@@ -15,7 +15,7 @@ export const ProductCard: React.FC <Props> = ({ small = false, product, isClick 
         <div className='product-card'>
           <div className='product-card__container'>
             <Link to={`/${product.attributes.slug}`} onClick={isClick}>
-              <img src={product.attributes.image.data[0].attributes.url} alt={product.attributes.title} />
+              <img src={product.attributes.image.data[0].attributes.url} alt={product.attributes.title} width={270} height={163} />
             </Link>
             <div className='product-card__title'>{product.attributes.title}</div>
             {small || (

@@ -85,4 +85,40 @@
       height: 48px;
     }
   }
+
+  &__select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: #fff;
+
+    &::after {
+      content: '▼'; /* Символ стрелочки */
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      background: none;
+    }
+
+    /* Стилизируем текст в селекте */
+    &::-ms-expand {
+      display: none;
+      background: none;
+    }
+
+  }
+
+  &__option {
+    color: #fff;
+    background: none;
+  }
 }
+
+

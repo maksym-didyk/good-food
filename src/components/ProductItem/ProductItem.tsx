@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ProductItem.scss';
 import '../../assets/styles/scss/loader.scss';
 import { Header } from '../Header';
@@ -12,6 +12,7 @@ import classnames from 'classnames';
 import { Product } from '../../types/Product';
 import { client } from '../../utils/fetchClient';
 import { MutatingDots } from 'react-loader-spinner';
+import { Locale } from '../../types/Locale';
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -28,14 +29,16 @@ interface Energy {
 }
 
 export const ProductItem: React.FC<Props> = ({ slug='' }) => {
-  const [products, setProducts] = React.useState<Product[]>([]);
-  const [isClick, setIsClick] = React.useState(false);
-  const [isLoading, seIsLoading] = React.useState(true);
-  const [datecalendar, setDatecalendar] = React.useState<Value>(new Date());
-  const [energy, setEnergy] = React.useState<Energy>();
-  const [keyTab, setKeyTab] = React.useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isClick, setIsClick] = useState(false);
+  const [isLoading, seIsLoading] = useState(true);
+  const [datecalendar, setDatecalendar] = useState<Value>(new Date());
+  const [energy, setEnergy] = useState<Energy>();
+  const [keyTab, setKeyTab] = useState('');
   const [, setProduct] = useLocalStorage<string>('product', '');
   const [, setDate] = useLocalStorage<string>('date', '');
+  const [locales, setLocales] = useState<Locale[]>([]);
+  const [locale, setLocale] = useLocalStorage('locale', 'ru');
 
   const handleClick = () => {
     if (datecalendar instanceof Date) {
@@ -51,9 +54,12 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
     setProduct(slug);
   };
 
-  const loadProducts = async () => {
-    const productsData = await client.get<any>('/products?sort=price&populate[0]=image&populate[1]=menu.dish.image');
+  const loadData = async () => {
+    const productsData = await client.get<any>(`/products?locale=${locale}&sort=price&populate[0]=image&populate[1]=menu.dish.image`);
+    const localesDataApi = await client.get<Locale[]>('/i18n/locales');
+
     setProducts(productsData.data);
+    setLocales(localesDataApi);
 
     seIsLoading(false);
   };
@@ -71,9 +77,14 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
     }
   }
 
+  const setLang = (event: any) => {
+    setLocale(event.target.value)
+  }
+
   React.useEffect(() => {
-    loadProducts(); 
-  }, []);
+    loadData();
+  // eslint-disable-next-line
+  }, [locale]);
 
   if (isLoading) {
     return (
@@ -97,7 +108,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
     <>
       <div className='product'>
         <div className='product__header'>
-          <Header isBlack={true} />
+          <Header isBlack={true} locales={locales} locale={locale} setLang={setLang} />
         </div>
 
         <div className='product__container'>

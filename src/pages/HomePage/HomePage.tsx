@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './HomePage.scss';
 import '../../assets/styles/scss/loader.scss';
 import { Header } from '../../components/Header';
@@ -9,25 +9,36 @@ import { Product } from '../../types/Product';
 import { HomePageAttributes } from '../../types/HomePage';
 import { MutatingDots } from 'react-loader-spinner';
 import { client } from '../../utils/fetchClient';
+import { Locale } from '../../types/Locale';
+import { useLocalStorage } from 'usehooks-ts';
 
 export const HomePage = () => {
-  const [products, setProducts] = React.useState<Product[]>([]);
-  const [homeData, setHomeData] = React.useState<HomePageAttributes>();
-  const [isLoading, seIsLoading] = React.useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [homeData, setHomeData] = useState<HomePageAttributes>();
+  const [isLoading, seIsLoading] = useState(true);
+  const [locales, setLocales] = useState<Locale[]>([]);
+  const [locale, setLocale] = useLocalStorage('locale', 'ru');
 
   const loadData = async () => {
-    const homeDataApi = await client.get<any>('/home-page?populate[0]=faq_tabs.questions&populate[1]=about_string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph.image&populate[5]=comment.icon');
-    const productsDataApi = await client.get<any>('/products?sort=price&populate=image');
+    const homeDataApi = await client.get<any>(`/home-page?locale=${locale}&populate[0]=faq_tabs.questions&populate[1]=about_string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph.image&populate[5]=comment.icon`);
+    const productsDataApi = await client.get<any>(`/products?locale=${locale}&sort=price&populate=image`);
+    const localesDataApi = await client.get<Locale[]>('/i18n/locales');
 
     setHomeData(homeDataApi.data.attributes);
     setProducts(productsDataApi.data);
+    setLocales(localesDataApi);
 
     seIsLoading(false);
   };
 
+const setLang = (event: any) => {
+  setLocale(event.target.value)
+}
+
   React.useEffect(() => {
     loadData();
-  }, []);
+  // eslint-disable-next-line
+  }, [locale]);
 
   if (isLoading) {
     return (
@@ -51,7 +62,7 @@ export const HomePage = () => {
     <div className="homepage">
       <section className='homepage__hero' id='hero'>
 
-        <Header />
+        <Header locales={locales} locale={locale} setLang={setLang} />
 
         <div className='homepage__hero-section'>
           <div className='homepage__hero--title'>

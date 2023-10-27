@@ -1,12 +1,16 @@
 import React from 'react';
 import './Header.scss';
 import classNames from "classnames";
+import { Locale } from '../../types/Locale';
 
 interface Props {
   isBlack?: boolean;
+  locales: Locale[];
+  locale: string;
+  setLang: (event: any) => void;
 }
 
-export const Header: React.FC<Props> = ({isBlack = false}) => {
+export const Header: React.FC<Props> = ({isBlack = false, locales, locale, setLang}) => {
     return(
         <div className='header'>
             <div className='header__container'>
@@ -54,38 +58,50 @@ export const Header: React.FC<Props> = ({isBlack = false}) => {
                     </svg>
                 )}
               </a>
-            <div className='header__navbar'>
-              <ul className='header__menu'>
-                <li>
-                  <a href='/#menu' className={classNames(
-                    'header__link',
-                    { 'header__link--black': isBlack }
-                    )}
-                  >
-                    Меню
-                  </a>
-                </li>
-                <li>
-                  <a href='/#about-us' className={classNames(
-                    'header__link',
-                    { 'header__link--black': isBlack }
-                    )}
-                  >
-                    O нас
-                  </a>
-                </li>
-                <li>
-                  <a href='/#howitwork' className={classNames(
-                    'header__link',
-                    { 'header__link--black': isBlack }
-                    )}
-                  >
-                    Как это работает?
-                  </a>
-                </li>
-              </ul>
-              <button className='header__button sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f'>Связаться</button>
-            </div>
+              <nav className='header__navbar'>
+                <ul className='header__menu'>
+                  <li>
+                    <a href='/#menu' className={classNames(
+                      'header__link',
+                      { 'header__link--black': isBlack }
+                      )}
+                    >
+                      Меню
+                    </a>
+                  </li>
+                  <li>
+                    <a href='/#about-us' className={classNames(
+                      'header__link',
+                      { 'header__link--black': isBlack }
+                      )}
+                    >
+                      O нас
+                    </a>
+                  </li>
+                  <li>
+                    <a href='/#howitwork' className={classNames(
+                      'header__link',
+                      { 'header__link--black': isBlack }
+                      )}
+                    >
+                      Как это работает?
+                    </a>
+                  </li>
+                  {!isBlack && (
+                    <li>
+                    <select
+                      name="locales"
+                      onChange={setLang}
+                      value={locale}
+                    >
+                      {locales.map(lang => <option value={lang.code}>{lang.name}</option>)}
+                    </select>
+                  </li>
+                  )}
+
+                </ul>
+                <button className='header__button sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f'>Связаться</button>
+              </nav>
             </div>
         </div>
     );
