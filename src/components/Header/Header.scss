@@ -1,5 +1,17 @@
 @import '../../assets/styles/scss/mixins';
 
+select {
+  border: transparent;
+  background: transparent;
+  color: white;
+  outline: none;
+  cursor: pointer;
+}
+
+option {
+  color: #000;
+}
+
 .header {
   padding: 40px 70px 110px;
   position: absolute;
@@ -78,7 +90,7 @@
       background: transparent;
       border: 1px solid #C21807;
       background: transparent;
-      color:#000;
+      color: #C21807;
     }
 
     @include onPhone {
@@ -120,5 +132,3 @@
     background: none;
   }
 }
-
-

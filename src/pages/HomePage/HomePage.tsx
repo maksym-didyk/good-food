@@ -11,6 +11,7 @@ import { MutatingDots } from 'react-loader-spinner';
 import { client } from '../../utils/fetchClient';
 import { Locale } from '../../types/Locale';
 import { useLocalStorage } from 'usehooks-ts';
+import { Elements, ElementsAttributes } from '../../types/Elements';
 
 export const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,15 +19,18 @@ export const HomePage = () => {
   const [isLoading, seIsLoading] = useState(true);
   const [locales, setLocales] = useState<Locale[]>([]);
   const [locale, setLocale] = useLocalStorage('locale', 'ru');
+  const [elements, setElements] = useState<ElementsAttributes>();
 
   const loadData = async () => {
     const homeDataApi = await client.get<any>(`/home-page?locale=${locale}&populate[0]=faq_tabs.questions&populate[1]=about_string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph.image&populate[5]=comment.icon`);
     const productsDataApi = await client.get<any>(`/products?locale=${locale}&sort=price&populate=image`);
     const localesDataApi = await client.get<Locale[]>('/i18n/locales');
+    const elementsDataApi = await client.get<Elements>(`/element?locale=${locale}&populate[0]=header_menu&populate[1]=footer_menu`);
 
     setHomeData(homeDataApi.data.attributes);
     setProducts(productsDataApi.data);
     setLocales(localesDataApi);
+    setElements(elementsDataApi.data.attributes);
 
     seIsLoading(false);
   };
@@ -62,7 +66,12 @@ const setLang = (event: any) => {
     <div className="homepage">
       <section className='homepage__hero' id='hero'>
 
-        <Header locales={locales} locale={locale} setLang={setLang} />
+        <Header 
+          locales={locales}
+          locale={locale}
+          setLang={setLang} 
+          elements={elements}
+        />
 
         <div className='homepage__hero-section'>
           <div className='homepage__hero--title'>
@@ -73,7 +82,7 @@ const setLang = (event: any) => {
           {homeData?.hero_content}
           </div>
 
-          <a href='#menu' className='header__button'>Заказать</a>
+          <a href='#menu' className='header__button'>{elements?.buy_button}</a>
         </div>
 
       </section>
@@ -86,7 +95,7 @@ const setLang = (event: any) => {
 
           {products &&
             products.map((item) => {
-              return <ProductCard key={item.id} product={item}/>;
+              return <ProductCard key={item.id} product={item} buy_button={elements?.buy_button}/>;
             })}
 
         </div>
@@ -251,10 +260,12 @@ const setLang = (event: any) => {
               {homeData?.feedback_paragraph.paragraph_red}
             </div>
             <div>
-              <button className='product-card__button-buy sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f'>Оставить заявку</button>
+              <button className='product-card__button-buy sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f'>
+                {homeData?.feedback_button}
+              </button>
             </div>
             <div className='homepage__formsection-policy'>
-              Нажимая на кнопку, вы соглашаетесь с Политикой конфиденциальности
+              {homeData?.feedback_policy}
             </div>
           </div>
 
@@ -263,7 +274,7 @@ const setLang = (event: any) => {
 
       </section>
 
-      <Footer />
+      <Footer elements={elements} products={products} />
     </div>
   );
 };

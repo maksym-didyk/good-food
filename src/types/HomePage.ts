@@ -11,7 +11,8 @@ export interface HomePageAttributes {
   faq_title: string;
   feedback_title: string;
   comments_title: string;
-  locale: string;
+  feedback_button: string;
+  feedback_policy: string;
   faq_tabs: [
     {
       id: number;

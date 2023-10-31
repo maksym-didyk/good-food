@@ -13,6 +13,7 @@ import { Product } from '../../types/Product';
 import { client } from '../../utils/fetchClient';
 import { MutatingDots } from 'react-loader-spinner';
 import { Locale } from '../../types/Locale';
+import { Elements, ElementsAttributes } from '../../types/Elements';
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -39,27 +40,16 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   const [, setDate] = useLocalStorage<string>('date', '');
   const [locales, setLocales] = useState<Locale[]>([]);
   const [locale, setLocale] = useLocalStorage('locale', 'ru');
-
-  const handleClick = () => {
-    if (datecalendar instanceof Date) {
-      const year = datecalendar.getFullYear();
-      const month = (datecalendar.getMonth() + 1).toString().padStart(2, '0'); // +1, так как месяцы начинаются с 0
-      const day = datecalendar.getDate().toString().padStart(2, '0');
-      const formattedDate = `${day}.${month}.${year}`;
-
-      setDate(formattedDate);
-    }
-
-    setIsClick(true);
-    setProduct(slug);
-  };
+  const [elements, setElements] = useState<ElementsAttributes>();
 
   const loadData = async () => {
     const productsData = await client.get<any>(`/products?locale=${locale}&sort=price&populate[0]=image&populate[1]=menu.dish.image`);
     const localesDataApi = await client.get<Locale[]>('/i18n/locales');
+    const elementsDataApi = await client.get<Elements>(`/element?locale=${locale}&populate[0]=header_menu&populate[1]=footer_menu`);
 
     setProducts(productsData.data);
     setLocales(localesDataApi);
+    setElements(elementsDataApi.data.attributes);
 
     seIsLoading(false);
   };
@@ -80,6 +70,20 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   const setLang = (event: any) => {
     setLocale(event.target.value)
   }
+
+  const handleClick = () => {
+    if (datecalendar instanceof Date) {
+      const year = datecalendar.getFullYear();
+      const month = (datecalendar.getMonth() + 1).toString().padStart(2, '0'); // +1, так как месяцы начинаются с 0
+      const day = datecalendar.getDate().toString().padStart(2, '0');
+      const formattedDate = `${day}.${month}.${year}`;
+
+      setDate(formattedDate);
+    }
+
+    setIsClick(true);
+    setProduct(currentProduct?.attributes.title || slug);
+  };
 
   React.useEffect(() => {
     loadData();
@@ -108,7 +112,13 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
     <>
       <div className='product'>
         <div className='product__header'>
-          <Header isBlack={true} locales={locales} locale={locale} setLang={setLang} />
+        <Header
+          isBlack={true}
+          locales={locales}
+          locale={locale}
+          setLang={setLang} 
+          elements={elements}
+        />
         </div>
 
         <div className='product__container'>
@@ -123,9 +133,9 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                 <a href='#menu'
                   className = 'product-card__button-buy product__button'
                 >
-                  от &nbsp;
+                  from &nbsp;
                   <span className='product__buttonprice'>{`€${price}`}</span>
-                  &nbsp; / день
+                  &nbsp; / day
                 </a>
               </div>
             </div>
@@ -189,19 +199,19 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
               </div>
               <div className='product__params'>
                 <div>
-                  <p>ккал</p>
+                  <p>{elements?.item_kcal}</p>
                   <p className='product__param'>{energy?.kcal || currentProduct?.attributes.kcal}</p>
                 </div>
                 <div>
-                  <p>б</p>
+                  <p>{elements?.item_prots}</p>
                   <p className='product__param'>{energy?.prots || currentProduct?.attributes.prots}</p>
                 </div>
                 <div>
-                  <p>ж</p>
+                  <p>{elements?.item_fats}</p>
                   <p className='product__param'>{energy?.fats || currentProduct?.attributes.fats}</p>
                 </div>
                 <div>
-                  <p>у</p>
+                  <p>{elements?.item_carbs}</p>
                   <p className='product__param'>{energy?.carbs || currentProduct?.attributes.carbs}</p>
                 </div>
               </div>
@@ -209,7 +219,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
             <div className='product__date'>
             <div className='product__datetitle'>
-              Выберите дату первой доставки
+              {elements?.item_delivery_date}
             </div>
             <div className='product__calendar'>
               <Calendar onChange={setDatecalendar} value={datecalendar} />
@@ -221,14 +231,14 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
               })}
               onClick={handleClick}
             >
-              Заказать
+              {elements?.buy_button}
             </button>
           </div>
           </div>
         </div>
         
         <div className='product__devider'></div>
-        <Footer isBlack={true} />
+        <Footer isBlack={true} elements={elements} products={products} />
       </div>      
     </>
   );

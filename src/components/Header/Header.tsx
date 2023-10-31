@@ -2,15 +2,23 @@ import React from 'react';
 import './Header.scss';
 import classNames from "classnames";
 import { Locale } from '../../types/Locale';
+import { ElementsAttributes } from '../../types/Elements';
 
 interface Props {
   isBlack?: boolean;
   locales: Locale[];
   locale: string;
   setLang: (event: any) => void;
+  elements?: ElementsAttributes;
 }
 
-export const Header: React.FC<Props> = ({isBlack = false, locales, locale, setLang}) => {
+export const Header: React.FC<Props> = ({
+  isBlack = false,
+  locales,
+  locale,
+  setLang,
+  elements,
+}) => {
     return(
         <div className='header'>
             <div className='header__container'>
@@ -60,34 +68,32 @@ export const Header: React.FC<Props> = ({isBlack = false, locales, locale, setLa
               </a>
               <nav className='header__navbar'>
                 <ul className='header__menu'>
-                  <li>
-                    <a href='/#menu' className={classNames(
+                  {elements?.header_menu.map(menu => 
+                    <li key={menu.id}>
+                    <a href={menu.url} className={classNames(
                       'header__link',
                       { 'header__link--black': isBlack }
                       )}
                     >
-                      Меню
+                      {menu.title}
                     </a>
                   </li>
-                  <li>
-                    <a href='/#about-us' className={classNames(
-                      'header__link',
-                      { 'header__link--black': isBlack }
-                      )}
+                    )}
+                  {/* {!isBlack && (
+                    <li>
+                    <select
+                      name="locales"
+                      onChange={setLang}
+                      value={locale}
                     >
-                      O нас
-                    </a>
+                      {locales.map(lang => <option value={lang.code}>{lang.name}</option>)}
+                    </select>
                   </li>
-                  <li>
-                    <a href='/#howitwork' className={classNames(
-                      'header__link',
-                      { 'header__link--black': isBlack }
-                      )}
-                    >
-                      Как это работает?
-                    </a>
-                  </li>
-                  {!isBlack && (
+                  )} */}
+
+                </ul>
+
+                {!isBlack && (
                     <li>
                     <select
                       name="locales"
@@ -98,9 +104,7 @@ export const Header: React.FC<Props> = ({isBlack = false, locales, locale, setLa
                     </select>
                   </li>
                   )}
-
-                </ul>
-                <button className='header__button sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f'>Связаться</button>
+                <button className='header__button sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f'>{elements?.contact_button}</button>
               </nav>
             </div>
         </div>

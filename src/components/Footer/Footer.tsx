@@ -2,12 +2,16 @@ import React from 'react';
 import './Footer.scss';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { ElementsAttributes } from '../../types/Elements';
+import { Product } from '../../types/Product';
 
 interface Props {
   isBlack?: boolean;
+  elements?: ElementsAttributes;
+  products: Product[];
 }
 
-export const Footer: React.FC<Props> = ({isBlack = false}) => {
+export const Footer: React.FC<Props> = ({isBlack = false, elements, products }) => {
     return(
         <div className={classNames(
           'footer',
@@ -16,42 +20,33 @@ export const Footer: React.FC<Props> = ({isBlack = false}) => {
           <div className='footer__container'>
             <div>
               <div className='footer__title'>
-                Выберите ваш рацион
+                {elements?.footer_ration}
               </div>
               <ul className='footer__menu'>
-                <li className='footer__li'>
-                  <Link to='/light' className={classNames('footer__link',{ 'footer__link--white': isBlack })}>Light</Link>
-                </li>
-                <li className='footer__li'>
-                  <Link to='/comfort' className={classNames('footer__link',{ 'footer__link--white': isBlack })}>Comfort</Link>
-                </li>
-                <li className='footer__li'>
-                  <Link to='/power' className={classNames('footer__link',{ 'footer__link--white': isBlack })}>Power</Link>
-                </li>
+                {products.map(product => 
+                  <li className='footer__li' key={product.id}>
+                    <Link to={product.attributes.slug} className={classNames('footer__link',{ 'footer__link--white': isBlack })}>{product.attributes.title}</Link>
+                  </li>       
+                )}
               </ul>
             </div>
             <div>  
               <div className='footer__title'>
-                Наши услуги
+                {elements?.footer_services}
               </div>
               <ul className='footer__menu'>
-                <li className='footer__li'>
-                  <a href='/#menu' className={classNames('footer__link',{ 'footer__link--white': isBlack })}>Рационы питания</a>
-                </li>
-                <li className='footer__li'>
-                  <a href='/#about-us' className={classNames('footer__link',{ 'footer__link--white': isBlack })}>О нас</a>
-                </li>
-                <li className='footer__li'>
-                  <a href='/#howitwork' className={classNames('footer__link',{ 'footer__link--white': isBlack })}>Как это работает?</a>
-                </li>
-                <li className='footer__li'>
-                  <a href='/#faq' className={classNames('footer__link',{ 'footer__link--white': isBlack })}>F.A.Q.</a>
-                </li>
+                {elements?.footer_menu.map(menu => 
+                  <li className='footer__li' key={menu.id}>
+                    <a href={menu.url} className={classNames('footer__link',{ 'footer__link--white': isBlack })}>
+                      {menu.title}
+                    </a>
+                  </li> 
+                )}
               </ul>
             </div>
             <div>
               <div className='footer__title'>
-                Свяжитесь с нами
+                {elements?.footer_callus}
               </div>
 
               <div className='footer__phone'>
@@ -61,9 +56,9 @@ export const Footer: React.FC<Props> = ({isBlack = false}) => {
                 <a href='tel:+34690832651' className='footer__number'>+34 690 83 26 51</a>
               </div>
               <div className='footer__call'>
-                Звонки принимаем ежедневно
+                {elements?.footer_calltime}
                 <br />
-                <b>c 8:00 до 17:00</b>
+                <strong>8:00 - 17:00</strong>
               </div>
 
               <div className='footer__icons'>
