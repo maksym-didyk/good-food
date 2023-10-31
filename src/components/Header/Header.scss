@@ -41,6 +41,14 @@ option {
     align-items: center;
     gap: 60px;
     cursor: pointer;
+
+    @include onTablet {
+      gap: 28px;
+    }
+
+    @include onPhone {
+      gap: 16px;
+    }
   }
 
   &__menu {
@@ -49,6 +57,10 @@ option {
     align-items: center;
     gap: 60px;
     cursor: pointer;
+
+    @include onTablet {
+      gap: 28px;
+    }
 
     @include onPhone {
       display: none;
