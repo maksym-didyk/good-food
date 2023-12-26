@@ -197,8 +197,8 @@ const setLang = (event: any) => {
         <h2 className='homepage__menu--title homepage__delivery--title'>{homeData?.delivery_title}</h2>
 
         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
-          <path d="M32 56C45.2548 56 56 45.2548 56 32C56 18.7452 45.2548 8 32 8C18.7452 8 8 18.7452 8 32C8 45.2548 18.7452 56 32 56Z" stroke="#C21807" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M29.334 21.3333V34.6667H42.6673" stroke="#C21807" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M32 56C45.2548 56 56 45.2548 56 32C56 18.7452 45.2548 8 32 8C18.7452 8 8 18.7452 8 32C8 45.2548 18.7452 56 32 56Z" stroke="#C21807" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M29.334 21.3333V34.6667H42.6673" stroke="#C21807" strokeWidth="2.66667" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
 
         <div className='homepage__maptext'>

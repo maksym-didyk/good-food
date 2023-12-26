@@ -1,5 +1,6 @@
-const API_KEY = process.env.STRAPI_API_TOKEN;
-const API_URL = 'https://good-food-strapi-production.up.railway.app/api';
+const API_KEY = process.env.REACT_APP_STRAPI_API_TOKEN;
+const API_URL = process.env.REACT_APP_STRAPI_API_URL;
+// const API_URL = 'https://good-food-strapi-production.up.railway.app/api';
 
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
@@ -8,14 +9,16 @@ function request<T>(
   method: RequestMethod = 'GET',
   data: any = null,
 ): Promise<T> {
-  const options: RequestInit = { method };
+  const options: RequestInit = { 
+    method,
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': `Bearer ${API_KEY}`,
+    },
+   };
 
   if (data) {
     options.body = JSON.stringify(data);
-    options.headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': `Bearer ${API_KEY}`,
-    };
   }
 
   return fetch(API_URL + url, options)
