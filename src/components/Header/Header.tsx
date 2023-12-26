@@ -94,17 +94,15 @@ export const Header: React.FC<Props> = ({
                 </ul>
 
                 {!isBlack && (
-                    <li>
-                    <select
-                      name="locales"
-                      onChange={setLang}
-                      value={locale}
-                    >
-                      {locales.map(lang => <option value={lang.code}>{lang.name}</option>)}
-                    </select>
-                  </li>
+                  <select
+                    name="locales"
+                    onChange={setLang}
+                    value={locale}
+                  >
+                    {locales.map(lang => <option value={lang.code}>{lang.name}</option>)}
+                  </select>
                   )}
-                <button className='header__button sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f'>{elements?.contact_button}</button>
+                <button className={`header__button ${locale === 'ru' ? 'sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f' : 'sp_popup_d4fafa18-3ead-4b28-845f-f4c3f8c3b716'}`}>{elements?.contact_button}</button>
               </nav>
             </div>
         </div>

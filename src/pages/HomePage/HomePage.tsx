@@ -20,6 +20,7 @@ export const HomePage = () => {
   const [locales, setLocales] = useState<Locale[]>([]);
   const [locale, setLocale] = useLocalStorage('locale', 'ru');
   const [elements, setElements] = useState<ElementsAttributes>();
+  const [keyTab, setKeyTab] = useState('');
 
   const loadData = async () => {
     const homeDataApi = await client.get<any>(`/home-page?locale=${locale}&populate[0]=faq_tabs.questions&populate[1]=about_string&populate[2]=howitwork.image&populate[3]=howitwork_image&populate[4]=feedback_paragraph.image&populate[5]=comment.icon`);
@@ -35,9 +36,10 @@ export const HomePage = () => {
     seIsLoading(false);
   };
 
-const setLang = (event: any) => {
-  setLocale(event.target.value)
-}
+  const setLang = (event: any) => {
+    setLocale(event.target.value);
+    setKeyTab('');
+  }
 
   React.useEffect(() => {
     loadData();
@@ -84,7 +86,6 @@ const setLang = (event: any) => {
 
           <a href='#menu' className='header__button'>{elements?.buy_button}</a>
         </div>
-
       </section>
 
       <section className='homepage__menu' id='menu'>
@@ -94,9 +95,9 @@ const setLang = (event: any) => {
         <div className='homepage__products'>
 
           {products &&
-            products.map((item) => {
-              return <ProductCard key={item.id} product={item} buy_button={elements?.buy_button}/>;
-            })}
+            products.map(item => 
+              <ProductCard key={item.id} product={item} buy_button={elements?.buy_button}/>
+            )}
 
         </div>
       </section>
@@ -113,13 +114,11 @@ const setLang = (event: any) => {
             </div>
 
             <ul className='homepage__aboutus--list'>
-              {homeData?.about_string.map(item => {
-                return (
-                  <li key={item.id} className='homepage__aboutus--li'>
-                    {item.string}
-                  </li>
-                )
-              })}
+              {homeData?.about_string.map(item =>
+                <li key={item.id} className='homepage__aboutus--li'>
+                  {item.string}
+                </li>
+              )}
             </ul>
           </div>
 
@@ -135,22 +134,19 @@ const setLang = (event: any) => {
 
         <div className='homepage__products'>
 
-        {homeData?.howitwork.map(item => {
-          return (
-            <div key={item.id} className='homepage__whywecard'>
-              <img className='homepage__whywecard--image' src={item.image.data.attributes.url} alt={item.image.data.attributes.alternativeText} />
+        {homeData?.howitwork.map(item =>
+          <div key={item.id} className='homepage__whywecard'>
+            <img className='homepage__whywecard--image' src={item.image.data.attributes.url} alt={item.image.data.attributes.alternativeText} />
 
-              <div className='homepage__whywecard--title'>
-                {item.title}
-              </div>
+            <div className='homepage__whywecard--title'>
+              {item.title}
+            </div>
 
-              <div className='homepage__whywecard--content'>
-                {item.content}
-              </div>
+            <div className='homepage__whywecard--content'>
+              {item.content}
+            </div>
           </div>
-          )
-        })}
-
+        )}
         </div>
       </section>
 
@@ -158,37 +154,33 @@ const setLang = (event: any) => {
         <h2 className='homepage__menu--title'>{homeData?.comments_title}</h2>
           <div>
             <Carousel variant='dark'>
-            {homeData?.comment.map(comment => {
-              return (
-                <Carousel.Item key={comment.id}>
-                  <div className='homepage__commentwrapper'>
-                    <div className='homepage__comment'>
-                      <div className='homepage__comment-content'>
-                        <p>
-                          {comment.comment}
-                        </p>
-                        <p>
-                          {comment.icon.data && (
-                            <img src={comment.icon.data.attributes.url} alt='Source comment icon' className='homepage__comment-icon'/>
-                          )}
-                          <b>
-                            {comment.url
-                              ? (
-                                  <a href={comment.url} className='homepage__comment-link'>{comment.author}</a>
-                                )
-                              
-                              : (comment.author)
-                            }
-                          </b>
-                        </p>
-                      </div>
+            {homeData?.comment.map(comment =>
+              <Carousel.Item key={comment.id}>
+                <div className='homepage__commentwrapper'>
+                  <div className='homepage__comment'>
+                    <div className='homepage__comment-content'>
+                      <p>
+                        {comment.comment}
+                      </p>
+                      <p>
+                        {comment.icon.data && (
+                          <img src={comment.icon.data.attributes.url} alt='Source comment icon' className='homepage__comment-icon'/>
+                        )}
+                        <b>
+                          {comment.url
+                            ? (
+                                <a href={comment.url} className='homepage__comment-link'>{comment.author}</a>
+                              )
+                            
+                            : (comment.author)
+                          }
+                        </b>
+                      </p>
                     </div>
                   </div>
-                </Carousel.Item>
-                )
-            })}
-
-
+                </div>
+              </Carousel.Item>
+            )}
             </Carousel>
           </div>
       </section>
@@ -202,7 +194,7 @@ const setLang = (event: any) => {
         </svg>
 
         <div className='homepage__maptext'>
-        {homeData?.delivery_content}
+          {homeData?.delivery_content}
           <br />
           <span className='homepage__maptext--red'>{homeData?.delivery_time}</span>
         </div>
@@ -214,31 +206,28 @@ const setLang = (event: any) => {
           <h2 className='homepage__menu--title'>{homeData?.faq_title}</h2>
 
           <Tabs
-            defaultActiveKey="1"
+            activeKey={keyTab || homeData?.faq_tabs[0].id}
             id="justify-tab"
             className="mb-3"
             fill
+            onSelect={(tabId) => setKeyTab(tabId || '')}
           >
-            {homeData?.faq_tabs.map(tab => {
-              return (
-                <Tab key={tab.id} eventKey={tab.id} title={tab.title}>
-                  <div className='homepage__accordion'>
-                  {tab.questions && tab.questions.map(question => {
-                    return (
-                      <Accordion key={question.id} flush>
-                        <Accordion.Item eventKey={String(question.id)}>
-                          <Accordion.Header><b>{question.question}</b></Accordion.Header>
-                          <Accordion.Body style={{ width: '95%' }}>
-                            {question.answer}
-                          </Accordion.Body>
-                        </Accordion.Item>
-                      </Accordion>
-                    )
-                  })}
-                  </div>
-                </Tab>
-              )
-            })}
+            {homeData?.faq_tabs.map(tab =>
+              <Tab key={tab.id} eventKey={tab.id} title={tab.title}>
+                <div className='homepage__accordion'>
+                {tab.questions && tab.questions.map(question =>
+                  <Accordion key={question.id} flush>
+                    <Accordion.Item eventKey={String(question.id)}>
+                      <Accordion.Header><b>{question.question}</b></Accordion.Header>
+                      <Accordion.Body style={{ width: '95%' }}>
+                        {question.answer}
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                )}
+                </div>
+              </Tab>
+            )}
 
           </Tabs>
       </section>
@@ -260,7 +249,7 @@ const setLang = (event: any) => {
               {homeData?.feedback_paragraph.paragraph_red}
             </div>
             <div>
-              <button className='product-card__button-buy sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f'>
+              <button className={`product-card__button-buy ${locale === 'ru' ? 'sp_popup_a02b0b02-814d-41bb-8086-e314ede7f24f' : 'sp_popup_d4fafa18-3ead-4b28-845f-f4c3f8c3b716'}`}>
                 {homeData?.feedback_button}
               </button>
             </div>
@@ -268,7 +257,6 @@ const setLang = (event: any) => {
               {homeData?.feedback_policy}
             </div>
           </div>
-
 
         <div className='homepage__form'></div>
 

@@ -11,7 +11,7 @@ export const ProductPage = () => {
 
   React.useEffect(() => {
     scrollToTop();
-  }, []);
+  }, [slug]);
 
   return (
     <ProductItem slug={slug}/>

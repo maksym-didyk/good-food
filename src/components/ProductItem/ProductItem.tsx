@@ -43,7 +43,8 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   const [elements, setElements] = useState<ElementsAttributes>();
 
   const loadData = async () => {
-    const productsData = await client.get<any>(`/products?locale=${locale}&sort=price&populate[0]=image&populate[1]=menu.dish.image`);
+    // const productsData = await client.get<any>(`/products?locale=${locale}&sort=price&populate[0]=image&populate[1]=menu.dish.image&populate[2]=menus.menu.dish.image`);
+    const productsData = await client.get<any>(`/products?locale=${locale}&sort=price&populate[0]=image&populate[1]=menus.menu.dish.image`);
     const localesDataApi = await client.get<Locale[]>('/i18n/locales');
     const elementsDataApi = await client.get<Elements>(`/element?locale=${locale}&populate[0]=header_menu&populate[1]=footer_menu`);
 
@@ -59,7 +60,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
 
   const handleTabChange = (itemId: string | null) => {
     if (itemId) {
-      const { kcal, prots, fats, carbs } = currentProduct?.attributes.menu.find(item => item.id === +itemId) || {kcal: '', prots: '', fats: '', carbs: ''};
+      const { kcal, prots, fats, carbs } = currentProduct?.attributes.menus.data[0].attributes.menu.find(item => item.id === +itemId) || {kcal: '', prots: '', fats: '', carbs: ''};
 
       setEnergy({ kcal, prots, fats, carbs });
 
@@ -68,7 +69,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
   }
 
   const setLang = (event: any) => {
-    setLocale(event.target.value)
+    setLocale(event.target.value);
   }
 
   const handleClick = () => {
@@ -121,7 +122,8 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
         />
         </div>
 
-        <div className='product__container'>
+      {currentProduct ? (
+        <><div className='product__container'>
             <div>
               <div className='product__hero'>
                 <h1 className='product__title'>
@@ -131,7 +133,7 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
                   {currentProduct?.attributes.description}
                 </p>
                 <a href='#menu'
-                  className = 'product-card__button-buy product__button'
+                  className='product-card__button-buy product__button'
                 >
                   from &nbsp;
                   <span className='product__buttonprice'>{`€${price}`}</span>
@@ -143,100 +145,108 @@ export const ProductItem: React.FC<Props> = ({ slug='' }) => {
             <div className='product__products'>
               <Container>
                 <Row xs={1} md={1} lg={1} xl={2} className='g-4'>
-                    {products.filter(item => item.id !== currentProduct?.id).map(product => {
-                      return (
-                        <Col key={product.id} className='d-flex justify-content-center'>
-                          <ProductCard small={true} product={product} isClick={() => setKeyTab('')}/>
-                        </Col>
-                      )
-                    })}
+                  {products
+                    .filter(item => item.id !== currentProduct?.id)
+                    .map(product =>
+                      <Col key={product.id} className='d-flex justify-content-center'>
+                        <ProductCard small={true} product={product} isClick={() => setKeyTab('')} />
+                      </Col>
+                  )}
                 </Row>
               </Container>
             </div>
 
-        </div>
-
-        <div className='product__container' id="menu">
-          <div className='product__week'>
-            <Tabs
-              activeKey={keyTab || currentProduct?.attributes.menu[0].id}
-              id="justify-tab"
-              className="mb-3"
-              fill
-              onSelect={(menuId) => handleTabChange(menuId)}
-            >
-            {currentProduct?.attributes.menu.map((item) => {
-
-                return (
-                  <Tab
-                    key={item.id}
-                    eventKey={item.id}
-                    title={item.title}
-                    className='mb-3'
+          </div><div className='product__container' id="menu">
+              {currentProduct?.attributes.menus.data.length && (
+                <div className='product__week'>
+                  <Tabs
+                    activeKey={keyTab || currentProduct?.attributes.menus.data[0].attributes.menu[0].id}
+                    id="justify-tab"
+                    className="mb-3"
+                    fill
+                    onSelect={(menuId) => handleTabChange(menuId)}
                   >
-                    <Row sm={1} md={1} lg={1} xl={2} className="g-4">
+                    {currentProduct?.attributes.menus.data[0].attributes.menu.map(item =>
+                      <Tab
+                        key={item.id}
+                        eventKey={item.id}
+                        title={item.title}
+                        className='mb-3'
+                      >
+                        <Row sm={1} md={1} lg={1} xl={2} className="g-4">
 
-                      {item.dish.map(itemdish => {
-                        return (
-                          <Col key={itemdish.id} className='text-center'>
-                            <img src={itemdish.image.data?.attributes.formats.thumbnail.url} className='product__image' alt={itemdish.image.data?.attributes.name} />
-                            <p className='product__menuname'>{itemdish.title}</p>
-                          </Col>
-                        )
-                      })}
+                          {item.dish.map(itemdish =>
+                            <Col key={itemdish.id} className='text-center'>
+                              <img src={itemdish.image.data?.attributes.formats.thumbnail.url} className='product__image' alt={itemdish.image.data?.attributes.name} />
+                              <p className='product__menuname'>{itemdish.title}</p>
+                            </Col>
+                          )}
 
-                    </Row>
-                  </Tab>
-                )
-            })}
-            </Tabs>
-          </div>
+                        </Row>
+                      </Tab>
+                    )}
+                  </Tabs>
+                </div>
+              )}
 
-          <div className='product__date'>
-            <div className='product__energy'>
-              <div className='product__daily'>
-                Daily average
+              <div className='product__date'>
+                <div className='product__energy'>
+                  <div className='product__daily'>
+                    Daily average
+                  </div>
+                  <div className='product__params'>
+                    <div>
+                      <p>{elements?.item_kcal}</p>
+                      <p className='product__param'>{energy?.kcal || currentProduct?.attributes.kcal.split(' ')[0]}</p>
+                    </div>
+                    <div>
+                      <p>{elements?.item_prots}</p>
+                      <p className='product__param'>{energy?.prots || currentProduct?.attributes.prots}</p>
+                    </div>
+                    <div>
+                      <p>{elements?.item_fats}</p>
+                      <p className='product__param'>{energy?.fats || currentProduct?.attributes.fats}</p>
+                    </div>
+                    <div>
+                      <p>{elements?.item_carbs}</p>
+                      <p className='product__param'>{energy?.carbs || currentProduct?.attributes.carbs}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className='product__date'>
+                  <div className='product__datetitle'>
+                    {elements?.item_delivery_date}
+                  </div>
+                  <div className='product__calendar'>
+                    <Calendar onChange={setDatecalendar} value={datecalendar} />
+                  </div>
+
+                  <button
+                    className={classnames('product-card__button-buy product__button--buy', {
+                      'sp_popup_bc29364b-2ce6-43ba-b411-a8a54991bb78': isClick && locale === 'ru',
+                      'sp_popup_6b43f557-7a89-435c-9937-ff1943082ff9': isClick && locale !== 'ru',
+                    })}
+                    onClick={handleClick}
+                  >
+                    {elements?.buy_button}
+                  </button>
+                </div>
               </div>
-              <div className='product__params'>
-                <div>
-                  <p>{elements?.item_kcal}</p>
-                  <p className='product__param'>{energy?.kcal || currentProduct?.attributes.kcal}</p>
-                </div>
-                <div>
-                  <p>{elements?.item_prots}</p>
-                  <p className='product__param'>{energy?.prots || currentProduct?.attributes.prots}</p>
-                </div>
-                <div>
-                  <p>{elements?.item_fats}</p>
-                  <p className='product__param'>{energy?.fats || currentProduct?.attributes.fats}</p>
-                </div>
-                <div>
-                  <p>{elements?.item_carbs}</p>
-                  <p className='product__param'>{energy?.carbs || currentProduct?.attributes.carbs}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className='product__date'>
-            <div className='product__datetitle'>
-              {elements?.item_delivery_date}
-            </div>
-            <div className='product__calendar'>
-              <Calendar onChange={setDatecalendar} value={datecalendar} />
-            </div>
-
-            <button
-              className = {classnames('product-card__button-buy product__button--buy', {
-                'sp_popup_bc29364b-2ce6-43ba-b411-a8a54991bb78': isClick,
-              })}
-              onClick={handleClick}
-            >
-              {elements?.buy_button}
-            </button>
-          </div>
-          </div>
-        </div>
-        
+            </div></>
+      )
+      : (
+        <Container>
+          <Row xs={1} md={1} lg={1} xl={3} className='g-4'>
+            {products.map(product =>
+                <Col key={product.id} className='d-flex justify-content-center'>
+                  <ProductCard small={true} product={product} isClick={() => setKeyTab('')} />
+                </Col>
+            )}
+          </Row>
+        </Container>
+      )
+    }  
         <div className='product__devider'></div>
         <Footer isBlack={true} elements={elements} products={products} />
       </div>      
